@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="en">
+
+<head th:fragment="admin-header-link">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+<title>Dream Quiz Admin Panel</title>
+<meta content="Admin Dashboard" name="description" />     
+<meta content="Themesbrand" name="author" />
+<!--<link rel="shortcut icon" href="/grocery/assets/images/onedoorlogo.png">-->
+<script src="/grocery/assets/js/jquery.min.js"></script>
+<script src="/ckeditor/ckeditor.js"></script>
+<link rel="stylesheet" href="/grocery/assets/plugins/morris/morris.css">
+<link href="/grocery/assets/css/bootstrap.min.css" rel="stylesheet"
+	type="text/css">
+<link href="/grocery/assets/css/metismenu.min.css" rel="stylesheet"
+	type="text/css">
+<link href="/grocery/assets/css/icons.css" rel="stylesheet"
+	type="text/css">
+<link href="/grocery/assets/css/style.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="/grocery/assets/plugins/datatables/dataTables.bootstrap4.min.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="/grocery/assets/plugins/datatables/responsive.bootstrap4.min.css"
+	rel="stylesheet" type="text/css" />
+<script type="text/javascript"
+	src="/grocery/assets/js/validationText.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
+
+</head>
+
+<body>
+	<!-- Begin page -->
+	<!-- test -->
+	<div id="wrapper">
+		<!-- Top Bar Start -->
+		<div class="topbar" th:fragment="admin-navbar">
+			<!-- LOGO -->
+<!-- 			<div class="topbar-left" style="background-color: white;"> -->
+<!-- 				<a href="#" class="logo"> <span style="color: white;"> <img -->
+<!-- 						src="/assets/img/CB-logo-final.png" alt="" width="140"  -->
+<!-- 						height="80"> -->
+
+<!-- 				</span> <i> <img src="/assets/img/CB-logo-final.png" alt="" -->
+<!-- 						width="140" height="80"> -->
+
+
+<!-- 				</i> -->
+<!-- 				</a> -->
+<!-- 			</div> -->
+			<nav class="navbar-custom">
+				<ul class="navbar-right d-flex list-inline float-right mb-0">
+					<!--  <li class="dropdown notification-list d-none d-sm-block">
+                        <form role="search" class="app-search">
+                            <div class="form-group mb-0">
+                                <input type="text" class="form-control" placeholder="Search..">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                    </li> -->
+
+					<li class="dropdown notification-list">
+						<div class="dropdown notification-list nav-pro-img">
+							<a th:if="${session.profileImage1}" class="dropdown-toggle nav-link arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                	<img th:src="@{/uploads/book-admin/profile-image/{profileImage1}(profileImage1=${session.profileImage1})}" alt="user" class="rounded-circle">
+                            </a>
+                            
+                            <a th:unless="${session.profileImage1}" class="dropdown-toggle nav-link arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <img  src="/grocery/assets/images/users/profile.png" alt="user" class="rounded-circle">
+                            </a>
+                        
+							<div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+								<!-- item-->
+						<a class="dropdown-item" th:href="@{/book-admin/manage-admin-profile}"><i
+									class="mdi mdi-account-circle m-r-5"></i>Update Profile</a>
+						 <a 
+									class="dropdown-item d-block" th:href="@{/book-admin/manage-admin-password}"><i
+									class="mdi mdi-account-circle m-r-5"></i>Change Password</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item text-danger" th:href="@{/admin/logout}"><i
+									class="mdi mdi-power text-danger"></i> Logout</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<ul class="list-inline menu-left mb-0">
+					<li class="float-left">
+						<button class="button-menu-mobile open-left waves-effect">
+							<i class="mdi mdi-menu"></i>
+						</button>
+					</li>
+
+				</ul>
+			</nav>
+		</div>
+		<!-- Top Bar End -->
+		<!-- ========== Left Sidebar Start ========== -->
+		<div class="left side-menu" th:fragment="admin-sidebar">
+			<div class="slimscroll-menu" id="remove-scroll">
+				<!--- Sidemenu -->
+				<div id="sidebar-menu">
+					<!-- Left Menu Start -->
+					<ul class="metismenu" id="side-menu">
+				
+					
+					<!--//***** Side bar code****//-->
+					
+						
+						<!--<li><a th:href="@{/book-admin/dashboard}" class="waves-effect">
+								<i class="fas fa-home"></i><span
+								class="badge badge-primary badge-pill float-right"></span> <span>
+									Dashboard </span>
+						</a></li>-->
+<!-- 						<li><a th:href="@{/admin/location}" class="waves-effect"> -->
+<!-- 								<i class="mdi mdi-google-maps"></i><span -->
+<!-- 								class="badge badge-primary badge-pill float-right"></span> <span> -->
+<!-- 									Location Setting</span> -->
+<!-- 						</a></li> -->
+						
+<!-- 						<li><a th:href="@{/book-admin/customer-dashboard}" -->
+<!-- 							class="waves-effect"><i class="ion-android-user-menu"></i><span> -->
+<!-- 							      Customer</span></a></li> -->
+							      
+<!-- 						<li><a th:href="@{/admin/category-dashboard}" class="waves-effect"><i class="ion-ios7-cart-outline"></i><span> -->
+<!-- 								Category Management</span></a></li> -->
+								<!--<li><a th:href="@{/admin/addsubject}" class="waves-effect"><i class="ion-ios7-cart-outline"></i><span>
+								Add Subject</span></a></li>
+								
+								<li><a th:href="@{/admin/addnewtopic}" class="waves-effect"><i class="ion-ios7-cart-outline"></i><span>
+								Add New Topic</span></a></li>
+								
+								<li><a th:href="@{/admin/addnewsubtopic}" class="waves-effect"><i class="ion-ios7-cart-outline"></i><span>
+								Add New SubTopic</span></a></li>
+								
+								<li><a th:href="@{/admin/addnewqueation}" class="waves-effect"><i class="ion-ios7-cart-outline"></i><span>
+								Add New Queation</span></a></li>-->
+								
+								
+								<li><a th:href="@{/admin/queationbank}" class="waves-effect"><i class="ion-ios7-cart-outline"></i><span>
+								Queation Bank</span></a></li>
+									<!--<li><a th:href="@{/admin/manage-contact}" class="waves-effect"><i class="ion-ios7-cart-outline"></i><span>
+								Customer Queries</span></a></li>
+								-->
+								<!--<li><a th:href="@{/admin/manage-banner}" class="waves-effect"><i class="ion-ios7-cart-outline"></i><span>
+								Manage Banner</span></a></li>-->
+								
+								<!--<li><a th:href="@{/admin/manage-main-order}" class="waves-effect"><i class="dripicons-suitcase"></i><span>
+								Order Management</span></a></li>	
+								<li><a th:href="@{/admin/report-dashboard}" class="waves-effect"><i class="typcn typcn-th-large"></i><span>
+								Report</span></a></li>	-->
+<!-- 							<li><a th:href="@{/admin/order-dashboard}" class="waves-effect"><i class="dripicons-suitcase"></i><span> -->
+<!-- 								Order Management</span></a></li> -->
+									
+<!-- 							<li><a th:href="@{/book-admin/delivery-dashboard}" class="waves-effect"><i class="ion-ios7-box-outline"></i><span> -->
+<!-- 									Delivery</span></a></li> -->
+									
+							
+									
+<!-- 							<li><a th:href="@{/book-admin/transaction-charge-dashboard}" class="waves-effect"><i class="typcn typcn-shopping-cart"></i><span> -->
+<!-- 									Transaction Charges</span></a></li> -->
+									
+<!-- 							<li><a th:href="@{/admin/report-dashboard}" class="waves-effect"><i class="typcn typcn-th-large"></i><span> -->
+<!-- 								Report</span></a></li> -->
+<!-- 							<li><a th:href="@{/admin/other-dashboard}" class="waves-effect"><i class="typcn typcn-th-small"></i><span> -->
+<!-- 									Other</span></a></li> -->
+											
+									
+							
+									
+							
+								
+							
+							
+									
+									
+					</ul>
+				</div>
+				<!-- Sidebar -->
+				<div class="clearfix"></div>
+			</div>
+			<!-- Sidebar -left -->
+		</div>
+		<!-- Left Sidebar End -->
+	</div>
+	<!-- END wrapper -->
+	<!-- jQuery  -->
+	<div th:fragment="admin-footer-link">
+		<script src="/grocery/assets/js/bootstrap.bundle.min.js"></script>
+		<script src="/grocery/assets/js/metisMenu.min.js"></script>
+		<script src="/grocery/assets/js/jquery.slimscroll.js"></script>
+		<script src="/grocery/assets/js/waves.min.js"></script>
+		<script
+			src="/grocery/assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+		<script src="/grocery/assets/plugins/morris/morris.min.js"></script>
+		<script src="/grocery/assets/plugins/raphael/raphael-min.js"></script>
+		<script src="/grocery/assets/pages/dashboard.js"></script>
+		<script src="/grocery/assets/js/app.js"></script>
+		<script
+			src="/grocery/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+		<script
+			src="/grocery/assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+		<script
+			src="/grocery/assets/plugins/datatables/dataTables.buttons.min.js"></script>
+		<script
+			src="/grocery/assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+		<script src="/grocery/assets/plugins/datatables/jszip.min.js"></script>
+		<script src="/grocery/assets/plugins/datatables/pdfmake.min.js"></script>
+		<script src="/grocery/assets/plugins/datatables/vfs_fonts.js"></script>
+		<script src="/grocery/assets/plugins/datatables/buttons.html5.min.js"></script>
+		<script src="/grocery/assets/plugins/datatables/buttons.print.min.js"></script>
+		<script src="/grocery/assets/plugins/datatables/buttons.colVis.min.js"></script>
+		<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+		<script
+			src="/grocery/assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
+		<script src="/grocery/assets/pages/datatables.init.js"></script>
+		<script
+			src="https://cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+		<script>
+			$.fn.selectpicker.Constructor.BootstrapVersion = '4';
+		</script>
+		<script type="text/javascript">
+			$("#msg").show().delay(5000).fadeOut("slow");
+		</script>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head th:replace="admin/common/layout :: admin-header-link"></head>
+
+<body>
+	<!-- Begin page -->
+	<div id="wrapper">
+		<!-- Top Bar Start -->
+		<div class="topbar"
+			th:replace="admin/common/layout :: admin-navbar"></div>
+		<!-- Top Bar End -->
+		<!-- ========== Left Sidebar Start ========== -->
+		<div class="left side-menu"
+			th:replace="admin/common/layout :: admin-sidebar"></div>
+		<!-- Left Sidebar End -->
+		<!-- ============================================================== -->
+		<!-- Start right Content here -->
+		<!-- ============================================================== -->
+		<div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="page-title-box">
+								<div class="card m-b-20">
+									<div class="card-body">
+										<div class="row ">
+											<!-- test -->
+											<div class="col-md-12 table-responsive">
+												<h4 class="mt-0 m-b-20 header-title">
+													Customer Details
+													<!-- <button class="btn btn-success btn-sm m-1" type="button" data-toggle="modal" data-target="#myModal" style="float: right;">New User</button>-->
+												</h4>
+												<table class=" table table-striped dt-responsive nowrap"
+													id="datatable-buttons"
+													style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+													<thead>
+														<tr>
+
+                                                            <th>Sr.No</th>
+															<th>Customer Name</th>
+															<th>Email</th>
+															<th>Contact</th>
+															<!--                                                              <th>Wallet Amount</th> -->
+
+
+															<th>Status</th>
+
+															<th>Registered Date</th>
+
+
+
+														</tr>
+													</thead>
+													<tbody id="showData">
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal fade " id="editModal" tabindex="-1" role="dialog"
+						aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						<div
+							class="modal-dialog modal-md modal-dialog-centered modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalCenterTitle">Update
+										Customer</h5>
+									<button class="close" type="button" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form id="update">
+										<div class="row">
+
+											<input class="form-control form-control-rounded" name=id
+												id="userId" type="hidden" placeholder="user id"
+												title="only alphabets and spaces allowed" required />
+
+
+											<div class="col-md-12 form-group mb-3">
+												<label for="firstName2">Status</label> <select
+													class="form-control form-control-rounded" name="status"
+													id="status1" required>
+													<option value="">Status</option>
+													<option value="Active">Active</option>
+													<option value="Inactive">Inactive</option>
+												</select>
+											</div>
+
+											<div class="col-md-12 modal-footer mt-3">
+												<button class="btn btn-secondary" type="button"
+													data-dismiss="modal">Close</button>
+												<input class="btn btn-primary ml-2 submit" type="submit"
+													value="Save">
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="admin/common/layout :: admin-footer-link"></div>
+	<script type="text/javascript">
+		$('document').ready(
+				function() {
+
+					$('#datatable-buttons').DataTable({
+						destroy : true,
+						lengthChange : false,
+						sort : [ 2, "asc" ],
+						buttons : [ 'copy', 'excel', 'colvis' ]
+					}).buttons().container().appendTo(
+							'#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+					showUserList();
+
+					/* show_all_states();  */
+
+				});
+
+		function showUserList() {
+			$('#datatable-buttons').DataTable().destroy();
+			$
+					.ajax({
+
+						type : "ajax",
+						dataType : 'json',
+						url : "/fetch-all-user-list",
+						method : 'GET',
+						async : false,
+						dataType : 'json',
+						success : function(data) {
+							;
+							var html = '';
+							var arr = [ "Jan", "Feb", "March", "April", "May",
+									"June", "July", "August", "Sept", "Oct",
+									"Nov", "Dec" ];
+							var i;
+
+							for (i = 0; i < data.length; i++) {
+
+								if (data[i].profileImage) {
+									var profileImage = '<td>'
+											+ '<a  href="/uploads/book-customer/'+data[i].profileImage+'" target="_blank">view</a>'
+											+ '</td>';
+								} else {
+									var profileImage = '<td>' + '</td>';
+								}
+
+								var date = new Date(data[i].updatedDate);
+								var from_dd = date.getDate();
+								var from_mm = date.getMonth() + 1;
+								var from_yyyy = date.getFullYear();
+								var from = from_yyyy + '-' + from_mm + '-'
+										+ from_dd;
+								var from_hours = date.getHours() > 12 ? date
+										.getHours() - 12 : date.getHours();
+								var from_am_pm = date.getHours() >= 12 ? "PM"
+										: "AM";
+								hours = from_hours < 10 ? "0" + from_hours
+										: from_hours;
+								var from_minutes = date.getMinutes() < 10 ? "0"
+										+ date.getMinutes() : date.getMinutes();
+								var from_seconds = date.getSeconds() < 10 ? "0"
+										+ date.getSeconds() : date.getSeconds();
+								updatedDate = from_dd + '-' + from_mm + '-'
+										+ from_yyyy + ' ' + from_hours + ":"
+										+ from_minutes + " " + from_am_pm;
+
+								if (data[i].registeredDate != null) {
+
+									var date = new Date(data[i].registeredDate);
+									var from_dd = date.getDate();
+									var from_mm = date.getMonth();
+									var from_yyyy = date.getFullYear();
+									var from = from_yyyy + '-' + from_mm + '-'
+											+ from_dd;
+									var from_hours = date.getHours() > 12 ? date
+											.getHours() - 12
+											: date.getHours();
+									var from_am_pm = date.getHours() >= 12 ? "PM"
+											: "AM";
+									hours = from_hours < 10 ? "0" + from_hours
+											: from_hours;
+									var from_minutes = date.getMinutes() < 10 ? "0"
+											+ date.getMinutes()
+											: date.getMinutes();
+									var from_seconds = date.getSeconds() < 10 ? "0"
+											+ date.getSeconds()
+											: date.getSeconds();
+									registeredDate = from_dd + ' '
+											+ arr[from_mm] + ' ' + from_yyyy;
+								} else {
+									registeredDate = ' ';
+								}
+
+								html += ' <tr>'+'<td>' + (i+1) + '</td>'
+										+
+
+									
+										//                    '<td>' + data[i].userId + '</td>' +
+										'<td>'
+										+ data[i].firstName+' '+data[i].lastName
+										+ '</td>'
+										+ '<td>'
+										+ data[i].email
+										+ '</td>'
+										+ '<td>'
+										+ data[i].phone
+										+ '</td>'
+										
+										+ '<td>'
+										+ data[i].status
+										+ '</td>'
+										
+										+ '<td>'
+										+ registeredDate
+										+ '</td>'
+									
+										+ ' </tr>';
+
+							}
+							$("#showData").html(html);
+
+							$('#datatable-buttons')
+									.DataTable({
+										destroy : true,
+										lengthChange : false,
+										sort : [],
+										"ordering" : false,
+										buttons : [ 'copy', 'excel', 'colvis' ]
+									})
+									.buttons()
+									.container()
+									.appendTo(
+											'#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+						},
+						error : function() {
+							alert('could not get data from database');
+						}
+					});
+		}
+
+		$('#showData').on('click', '.edit', function() {
+			var id = $(this).attr('data');
+			$('#editModal').modal('show');
+
+			$.ajax({
+				type : 'ajax',
+				method : 'GET',
+				url : "/get-book-user",
+				data : {
+					id : id
+				},
+				async : false,
+				dataType : 'json',
+				success : function(data) {
+
+					$("#userId").val(data.id);
+					$("#status1").val(data.status);
+
+				},
+				error : function() {
+					alert('Could not Edit Data');
+				}
+			});
+		});
+
+		$(document).on('submit', '#update', function(e) {
+
+			e.preventDefault();
+
+			$.ajax({
+				url : "/update-book-user",
+				method : 'POST',
+				data : new FormData(this),
+				contentType : false,
+				processData : false,
+				cache : false,
+				beforeSend : function() {
+
+					$(".submit").prop('disabled', true);
+				},
+
+				success : function(data) {
+					$(".submit").prop('disabled', false);
+					$('#update')[0].reset();
+					$('#editModal').modal('hide');
+
+					showUserList();
+					alert('User Updated');
+
+				},
+				error : function() {
+					/*alert('could not insert');*/
+				}
+			});
+
+		});
+
+		$(document).on('click', '.delete', function() {
+			var Id = $(this).attr('data');
+			if (confirm('Are you want to delete this?'))
+				$.ajax({
+					method : "POST",
+					url : "/delete-book-user",
+					data : {
+						Id : Id
+					},
+					success : function(data) {
+						showUserList();
+						alert(' user Deleted');
+					},
+					error : function() {
+						alert('could not delete');
+					}
+				});
+		});
+	</script>
+</body>
+
+</html>
