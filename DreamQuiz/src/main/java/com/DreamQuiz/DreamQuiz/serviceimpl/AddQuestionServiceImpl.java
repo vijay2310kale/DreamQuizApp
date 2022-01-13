@@ -93,6 +93,21 @@ public class AddQuestionServiceImpl {
 			// TODO Auto-generated method stub
 			return subTopicRepository.getSubTopicsbytid(tid);
 		}
+
+		public List<String> getallsubject() {
+			// TODO Auto-generated method stub
+			return subjectRepository.findonlysubject();
+		}
+
+		public List<String> getAllTpoicfromdb(long sid) {
+			// TODO Auto-generated method stub
+			return topicRepository.findtopicbysid(sid);
+		}
+
+		public List<String> findsubtopicfromdb(long tid) {
+			// TODO Auto-generated method stub
+			return subTopicRepository.subtopicfromdb(tid);
+		}
 	 
 	
 	

@@ -24,4 +24,8 @@ public interface SubTopicRepository extends JpaRepository<SubTopics,Long> {
 	@Query(nativeQuery = true, value = "SELECT * FROM sub_topics where tid=:tid")
 	List<SubTopics> getSubTopicsbytid(Long tid);
 
+	
+	@Query(nativeQuery = true, value = "SELECT subtopicname FROM sub_topics where tid=:tid")
+	List<String> subtopicfromdb(long tid);
+
 }

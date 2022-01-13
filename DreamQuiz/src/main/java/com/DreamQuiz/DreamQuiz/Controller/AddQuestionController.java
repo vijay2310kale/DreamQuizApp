@@ -45,25 +45,106 @@ public class AddQuestionController {
 	
 	@RequestMapping(value = "/AddNewSubject", method = RequestMethod.POST)
 
-	public void addNewSubject(Subject subject) {
+	public AppJsopnResponse addNewSubject(Subject subject) {
+		
 		System.out.println("hello  \"/AddNewSubject\"   ");
-		addQuestionService.addNewSubject(subject);
+		
+			String subName=subject.getSubjectName();
+			
+			System.out.println("subject name "+subName);
+			List<String> subjectfromdb = addQuestionService.getallsubject();
+			System.out.println("size of subject list "+subjectfromdb.size());
+			if(subjectfromdb.contains(subName))
+			{
+				
+				AppJsopnResponse resp = new AppJsopnResponse();
+				resp.setMessage("Subject Allready exits ");
+				resp.setStatus("True");
+				System.out.println("not save subject");
+				return resp;
+			}
+			
+			else {
+				addQuestionService.addNewSubject(subject);
+				System.out.println(" save subject success");
+				AppJsopnResponse resp = new AppJsopnResponse();
+				resp.setMessage("Queation save ");
+				resp.setStatus("True");
+				return resp;
+			}
+		
 
+	}
+
+	private void selectallsubject() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@RequestMapping(value = "/AddTopic", method = RequestMethod.POST)
 
-	public void addnewtopic(Topics topics) {
+	public AppJsopnResponse addnewtopic(Topics topics) {
+		
+		
+		String topicfromuser=topics.getTopicname();
+		long sid=topics.getSid();
+		
+		System.out.println(" topic name from user : "+topicfromuser);
+		
+		List<String> topicfromdb=addQuestionService.getAllTpoicfromdb(sid);
+		System.out.println("size of subject list "+topicfromdb.size());
+		if(topicfromdb.contains(topicfromuser)) {
+			
+			AppJsopnResponse resp = new AppJsopnResponse();
+			resp.setMessage("Topic Allready exits ");
+			resp.setStatus("True");
+			System.out.println("not save topic");
+			return resp;
+		}
+		else {	
+			addQuestionService.addnewtopic(topics);
+			
+			AppJsopnResponse resp = new AppJsopnResponse();
+			resp.setMessage("Save Topic  success ");
+			resp.setStatus("True");
+			System.out.println("success save topic");
+			
+			return resp;
+		}
+	
+		}
 
-		addQuestionService.addnewtopic(topics);
-
-	}
+	
 
 	@RequestMapping(value = "/AddsubTopic", method = RequestMethod.POST)
 
-	public void addnewsubtopic(SubTopics subTopics) {
-
+	public AppJsopnResponse addnewsubtopic(SubTopics subTopics) {
+		
+		
+		String Subtopicfromuser=subTopics.getSubtopicname();
+		long tid=subTopics.getTid();
+		System.out.println(" SubTopic name from user : "+Subtopicfromuser);
+		List<String> subtopicfromdb=addQuestionService.findsubtopicfromdb(tid);
+		System.out.println(" SubTopic name listsize user : "+subtopicfromdb);
+		
+		if(subtopicfromdb.contains(Subtopicfromuser)) {
+			AppJsopnResponse resp = new AppJsopnResponse();
+			resp.setMessage("SubTopic Allready exits ");
+			resp.setStatus("True");
+			System.out.println("not save SubTopic");
+			return resp;
+			
+		}
+		else {		
 		addQuestionService.addnewsubtopic(subTopics);
+		
+		AppJsopnResponse resp = new AppJsopnResponse();
+		resp.setMessage("Save SubTopic  success ");
+		resp.setStatus("True");
+		System.out.println("success save SubTopic");
+		
+		return resp;
+		}
 
 	}
 
@@ -72,6 +153,8 @@ public class AddQuestionController {
 	@RequestMapping(value = "/findallSubject", method = RequestMethod.GET)
 	public List<Subject> findalaSubject() {
 		return addQuestionService.getstudent();
+		
+		
 	}
 
 	
