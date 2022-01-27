@@ -8,22 +8,26 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.DreamQuiz.DreamQuiz.entity.Queations;
-import com.DreamQuiz.DreamQuiz.entity.Subject;
-
+import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
 
 @Repository
-public interface SubjectRepository extends JpaRepository<Subject,Long>  {
+public interface CurrentAfairsRepository extends JpaRepository<CurrentAffairs,Long> {
+
 
 	
 	@Transactional
 	@Modifying
-
-	@Query(nativeQuery = true, value = "SELECT subject_name FROM subject")
-	List<String> findonlysubject();
+	
+	@Query(nativeQuery = true, value = "SELECT title FROM current_affairs")
+	List<String> findallcrpdftitle();
 
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM subject")
-	List<Subject> selectallsubject();
+	@Query(nativeQuery = true, value = "SELECT * FROM current_affairs")
+	List<CurrentAffairs> getallCA();
+	
+	
+	
+	
+	
 
 }

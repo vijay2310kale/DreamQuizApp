@@ -26,4 +26,7 @@ public interface TopicRepository extends JpaRepository<Topics,Long> {
 	@Query(nativeQuery = true, value = "SELECT topicname FROM topics where sid=:sid")
 	List<String> findtopicbysid(long sid);
 
+	@Query(nativeQuery = true, value = "SELECT * FROM topics where sid=:sid")
+	List<Topics> alltoipcbysid(long sid);
+
 }

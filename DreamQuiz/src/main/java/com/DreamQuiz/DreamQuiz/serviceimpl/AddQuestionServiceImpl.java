@@ -6,14 +6,22 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.DreamQuiz.DreamQuiz.Repository.CurrentAfairsRepository;
+import com.DreamQuiz.DreamQuiz.Repository.ExamdetailsRepository;
+import com.DreamQuiz.DreamQuiz.Repository.OldPaperRepository;
 import com.DreamQuiz.DreamQuiz.Repository.QueationRepository;
 import com.DreamQuiz.DreamQuiz.Repository.SubTopicRepository;
 import com.DreamQuiz.DreamQuiz.Repository.SubjectRepository;
 import com.DreamQuiz.DreamQuiz.Repository.TopicRepository;
+import com.DreamQuiz.DreamQuiz.Repository.VideodetalsRepository;
+import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
+import com.DreamQuiz.DreamQuiz.entity.Examdetails;
+import com.DreamQuiz.DreamQuiz.entity.OldPaper;
 import com.DreamQuiz.DreamQuiz.entity.Queations;
 import com.DreamQuiz.DreamQuiz.entity.SubTopics;
 import com.DreamQuiz.DreamQuiz.entity.Subject;
 import com.DreamQuiz.DreamQuiz.entity.Topics;
+import com.DreamQuiz.DreamQuiz.entity.Videodetails;
 
 @Service
 public class AddQuestionServiceImpl {
@@ -26,9 +34,14 @@ public class AddQuestionServiceImpl {
 	QueationRepository queationRepository;
 	@Autowired
 	SubTopicRepository subTopicRepository;
-
-	
-	
+     @Autowired
+     CurrentAfairsRepository currentAfairsRepository;
+	@Autowired
+	OldPaperRepository oldPaperRepository;
+	@Autowired
+	VideodetalsRepository videodetalsRepository;
+	@Autowired
+	ExamdetailsRepository examdetailsRepository ;
 	public Subject addNewSubject(Subject subject) {
 		
 		return subjectRepository.save(subject);
@@ -107,6 +120,66 @@ public class AddQuestionServiceImpl {
 		public List<String> findsubtopicfromdb(long tid) {
 			// TODO Auto-generated method stub
 			return subTopicRepository.subtopicfromdb(tid);
+		}
+
+		public long getlastinsertpid() {
+			// TODO Auto-generated method stub
+			return queationRepository.getlastinsertpid();
+		}
+
+		public List<String> findallcrpdftitle() {
+			// TODO Auto-generated method stub
+			return currentAfairsRepository.findallcrpdftitle();
+		}
+
+	
+
+		public CurrentAffairs addnewcapdf(CurrentAffairs curentafairs) {
+			return currentAfairsRepository.save(curentafairs);
+			
+			
+		}
+
+		public List<String> findoldpapertitle() {
+			
+			return oldPaperRepository.selectoldpapertitle();
+		}
+
+		public OldPaper addnewoldpaperpdf(OldPaper oldpaper) {
+			return oldPaperRepository.save(oldpaper);
+			
+		}
+
+		public List<OldPaper> getoldpaperpdf() {
+			// TODO Auto-generated method stub
+			return oldPaperRepository.findAll();
+		}
+
+		public List<CurrentAffairs> getcurrentafairspdf() {
+			// TODO Auto-generated method stub
+			return currentAfairsRepository.findAll();
+		}
+
+		public List<String> videotitlefromdb() {
+			// TODO Auto-generated method stub
+			return videodetalsRepository.videotitlefromdb();
+		}
+
+		public Videodetails AddNewVideodetails(Videodetails videodetails) {
+			return videodetalsRepository.save(videodetails) ;
+			
+			
+		}
+
+		public List<String> examnamefromdb() {
+			// TODO Auto-generated method stub
+			return examdetailsRepository.examnamefromdb() ;
+		}
+
+		public Examdetails AddExamdetails(Examdetails examdetails) {
+			return examdetailsRepository.save(examdetails);
+			// TODO Auto-generated method stub
+			
 		}
 	 
 	

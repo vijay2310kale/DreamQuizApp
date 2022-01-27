@@ -24,6 +24,9 @@ public interface QueationRepository extends JpaRepository<Queations,Long> {
 	@Query(nativeQuery = true, value = "SELECT * FROM queations where stid=:stid")
 	List<Queations> getDatabysubtopicidList(Long stid);
 
+	@Query(nativeQuery = true, value = "SELECT qid FROM queations ORDER BY qid DESC LIMIT 1")
+	long getlastinsertpid();
+
 }
 
  

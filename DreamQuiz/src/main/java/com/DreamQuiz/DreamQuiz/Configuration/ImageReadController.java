@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ImageReadController {
 	
+	//String uploadProductDirectory = System.getProperty("user.dir") + "/uploads/";
 	String uploadProductDirectory = System.getProperty("user.dir") + "/uploads/";
-	
 	
 	@RequestMapping("/uploads")
 	

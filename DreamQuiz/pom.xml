@@ -8,11 +8,11 @@
 		<version>2.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.nmProCreation</groupId>
-	<artifactId>NMProCreation</artifactId>
+	<groupId>com.DreamQuiz</groupId>
+	<artifactId>DreamQuiz</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>NMProCreation</name>
-	<description>NMProCreation</description>
+	<name>DreamQuiz</name>
+	<description>DreamQuiz</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>

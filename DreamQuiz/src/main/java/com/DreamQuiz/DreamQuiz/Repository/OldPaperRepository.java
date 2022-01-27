@@ -8,22 +8,23 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.DreamQuiz.DreamQuiz.entity.Queations;
-import com.DreamQuiz.DreamQuiz.entity.Subject;
+import com.DreamQuiz.DreamQuiz.entity.OldPaper;
 
 
 @Repository
-public interface SubjectRepository extends JpaRepository<Subject,Long>  {
+public interface OldPaperRepository  extends JpaRepository<OldPaper,Long> {
 
+	
+	
+	
 	
 	@Transactional
 	@Modifying
-
-	@Query(nativeQuery = true, value = "SELECT subject_name FROM subject")
-	List<String> findonlysubject();
-
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM subject")
-	List<Subject> selectallsubject();
+	@Query(nativeQuery = true, value = "SELECT optitle FROM old_paper ")
+	List<String> selectoldpapertitle();
 
+	@Query(nativeQuery = true, value = "SELECT * FROM old_paper")
+	List<OldPaper> getalloldpaper();
+	
 }

@@ -1,20 +1,15 @@
 package com.DreamQuiz.DreamQuiz.Controller;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-//import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,10 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.DreamQuiz.DreamQuiz.entity.AppJsopnResponse;
+import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
+import com.DreamQuiz.DreamQuiz.entity.Examdetails;
+import com.DreamQuiz.DreamQuiz.entity.OldPaper;
 import com.DreamQuiz.DreamQuiz.entity.Queations;
 import com.DreamQuiz.DreamQuiz.entity.SubTopics;
 import com.DreamQuiz.DreamQuiz.entity.Subject;
 import com.DreamQuiz.DreamQuiz.entity.Topics;
+import com.DreamQuiz.DreamQuiz.entity.Videodetails;
 import com.DreamQuiz.DreamQuiz.serviceimpl.AddQuestionServiceImpl;
 
 
@@ -38,7 +37,7 @@ public class AddQuestionController {
 	@Autowired
 	AddQuestionServiceImpl addQuestionService;
 	
-	String uploadProductDirectory = System.getProperty("user.dir") + "/uploads/product/";
+	String uploadProductDirectory = System.getProperty("user.dir") + "/uploads/";
 
 	
 	
@@ -174,196 +173,7 @@ public class AddQuestionController {
 
 	
 
-	/*
-	 * @RequestMapping(value = "/Addnewqueation", method = RequestMethod.POST)
-	 * 
-	 * public void addnewqueationwithimg(@ModelAttribute("form") Queations
-	 * queations) { System.out.println("hello  11111");
-	 * addQuestionService.addnewqueation(queations);
-	 * 
-	 * }}
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * @RequestMapping(value = "/QueationImageUpload", method = RequestMethod.POST)
-	 * public void insertProduct(Queations queations, @RequestParam
-	 * List<MultipartFile> imagefile1,@RequestParam List<MultipartFile> imagefile2
-	 * ,@RequestParam List<MultipartFile> imagefile3,@RequestParam
-	 * List<MultipartFile> imagefile4,@RequestParam List<MultipartFile> imagefile5)
-	 * throws IOException {
-	 * 
-	 * 
-	 * List<String> list = new ArrayList<>();
-	 * 
-	 * String photoQ=List<MultipartFile> imagefile1;
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * String path = "E://DQImage/";
-	 * 
-	 * for (MultipartFile multipartFile : imagefile) { String filename =
-	 * multipartFile.getOriginalFilename(); Random random = new Random(); String
-	 * randomnumber = String.format("%04d", random.nextInt(10000)); filename =
-	 * randomnumber + "" + filename; System.out.println(path + " " + filename); try
-	 * { System.out.println("file image "); byte barr[] = multipartFile.getBytes();
-	 * BufferedOutputStream bout = new BufferedOutputStream(new
-	 * FileOutputStream(path + "/" + filename)); bout.write(barr); bout.flush();
-	 * bout.close(); System.out.println("filename=" + filename); String imagepath =
-	 * path + filename; //imagepath = "http://34.87.81.128/Files/" + filename; //
-	 * 34.87.81.128
-	 * 
-	 * imagepath = "E://DQImage/" + filename;
-	 * 
-	 * // int fileupload = service.insertImageFile(uid, imagepath);
-	 * //System.out.println("file upload " + fileupload);
-	 * 
-	 * } catch (Exception e) {
-	 * 
-	 * e.printStackTrace(); } } if (uid != "0") { bean = new ResponseBean("1",
-	 * "success");
-	 * 
-	 * } else { bean = new ResponseBean("0", "fail");
-	 * 
-	 * } Gson gson = new Gson(); String success = gson.toJson(bean);
-	 * response.getWriter().write(success); }
-	 
-	 * }
-	 */
-	
-
-	@RequestMapping(value = "/save-newQueation", method = RequestMethod.POST)
-	@ResponseBody
-	public AppJsopnResponse saveNewQueation(Queations queations,BindingResult bindingResult,
-			@RequestParam("imgQeation") MultipartFile imgQeation,
-			@RequestParam("imgOptionA") MultipartFile imgOptionA,
-			@RequestParam("imgOptionB") MultipartFile imgOptionB,
-			@RequestParam("imgOptionC") MultipartFile imgOptionC,
-			@RequestParam("imgOptionD") MultipartFile imgOptionD,HttpSession session) throws IOException {
 		
-		if (!imgQeation.isEmpty() && imgQeation != null) {
-
-			//String dateName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-			String originalFileName =   "QueationImage-"
-					+ imgQeation.getOriginalFilename().replace(" ", "-").toLowerCase();
-
-			Path fileNameAndPath = Paths.get(uploadProductDirectory, originalFileName);
-
-			try {
-				Files.write(fileNameAndPath, imgQeation.getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			queations.setImgQeation(originalFileName);
-		} else {
-
-			queations.setImgQeation("");
-		}
-
-		if (!imgOptionA.isEmpty() && imgOptionA != null) {
-
-			//String dateName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-			String originalFileName =   "OptionImageA-"
-					+ imgOptionA.getOriginalFilename().replace(" ", "-").toLowerCase();
-
-			Path fileNameAndPath = Paths.get(uploadProductDirectory, originalFileName);
-
-			try {
-				Files.write(fileNameAndPath, imgOptionA.getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			queations.setImgOptionA(originalFileName);
-			
-		} else {
-
-			queations.setImgOptionA("");
-		}
-
-		if (!imgOptionB.isEmpty() && imgOptionB != null) {
-
-			//String dateName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-			String originalFileName =   "imgOptionB-"
-					+ imgOptionB.getOriginalFilename().replace(" ", "-").toLowerCase();
-
-			Path fileNameAndPath = Paths.get(uploadProductDirectory, originalFileName);
-
-			try {
-				Files.write(fileNameAndPath, imgOptionB.getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			queations.setImgOptionB(originalFileName);
-			
-		} else {
-
-			queations.setImgOptionB("");
-		}
-
-		if (!imgOptionD.isEmpty() && imgOptionD != null) {
-
-			//String dateName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-			String originalFileName =   "imgOptionD-"
-					+ imgOptionD.getOriginalFilename().replace(" ", "-").toLowerCase();
-
-			Path fileNameAndPath = Paths.get(uploadProductDirectory, originalFileName);
-
-			try {
-				Files.write(fileNameAndPath, imgOptionD.getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			queations.setImgOptionD(originalFileName);
-			
-		} else {
-
-			queations.setImgOptionD("");
-		}
-		
-		
-		if (!imgOptionC.isEmpty() && imgOptionC != null) {
-
-			//String dateName = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
-			String originalFileName =   "imgOptionC-"
-					+ imgOptionC.getOriginalFilename().replace(" ", "-").toLowerCase();
-
-			Path fileNameAndPath = Paths.get(uploadProductDirectory, originalFileName);
-
-			try {
-				Files.write(fileNameAndPath, imgOptionC.getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			queations.setImgOptionC(originalFileName);
-			
-		} else {
-
-			queations.setImgOptionC("");
-		}
-		
-		addQuestionService.addnewqueation(queations);
-		AppJsopnResponse resp = new AppJsopnResponse();
-		resp.setMessage("Queation   saved successfully");
-		resp.setStatus("True");
-		return resp;
-		
-		
-		}
-	
-
-
-
-	
 	@RequestMapping(value = "/findTopicbysid/{sid}", method = RequestMethod.GET)
 
 	public List<Topics> getTopicbysid(@PathVariable Long sid) {
@@ -384,11 +194,508 @@ public class AddQuestionController {
 	
 	
 
+	@RequestMapping(value = "/save-newQueation", method = RequestMethod.POST)
+	@ResponseBody
+	public AppJsopnResponse saveNewQueation(Queations queations,BindingResult bindingResult,
+			@RequestParam("imgQeation") List<MultipartFile> imgQeation,
+			@RequestParam("imgOptionA") List<MultipartFile> imgOptionA,
+			@RequestParam("imgOptionB") List<MultipartFile> imgOptionB,
+			@RequestParam("imgOptionC") List<MultipartFile> imgOptionC,
+			@RequestParam("imgOptionD") List<MultipartFile> imgOptionD,HttpSession session) throws IOException {
+		
+		
+		
+		//long qid=	queations.getQid();
+		long lastprimaryid= addQuestionService.getlastinsertpid();
+		System.out.println("lastprimaryid "+lastprimaryid);
+		long plusone_lastprimaryid=lastprimaryid+1;
+		System.out.println("plusone_lastprimaryid  "+plusone_lastprimaryid);
+		String s_=String.valueOf(plusone_lastprimaryid);
+		
+		System.out.println("plusone_lastprimaryid String "+ s_);
+		
+		
+	//	String path = "/var/lib/tomcat8/webapps/Files/";
+	// String path = "F://DQImages/";
+	String path= "167.172.148.60:/home/dreamquiz/media/";
+		
+		if (!imgQeation.isEmpty() && imgQeation != null) {
+			
+			
+			for (MultipartFile multipartFile : imgQeation) {
+				String filename = multipartFile.getOriginalFilename();
+				Random random = new Random();
+				String randomnumber = String.format("%04d", random.nextInt(10000));
+				filename = randomnumber + "" + filename;
+				System.out.println(path + " " + filename);
+				try {
+					System.out.println("file image ");
+					byte barr[] = multipartFile.getBytes();
+					BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path + "/" + filename));
+					bout.write(barr);
+					bout.flush();
+					bout.close();
+					System.out.println("filename=" + filename);
+					String imagepath = path + filename;
+					
+					imagepath ="http://167.172.148.60:/home/dreamquiz/media/" +filename;
+					// 34.87.81.128
+
+					// imagepath = "F://DQImages/" + filename;
+				
+					//int fileupload = service.insertImageFile(uid, imagepath);
+					
+					
+					queations.setImgQeation(imagepath);
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		}
+		else {
+
+			queations.setImgQeation("");
+		
+
+		}
+
+		if (!imgOptionA.isEmpty() && imgOptionA != null) {
+			
+			
+			
+			for (MultipartFile multipartFile : imgOptionA) {
+				String filename = multipartFile.getOriginalFilename();
+				Random random = new Random();
+				String randomnumber = String.format("%04d", random.nextInt(10000));
+				filename = randomnumber + "" + filename;
+				System.out.println(path + " " + filename);
+				try {
+					System.out.println("file image ");
+					byte barr[] = multipartFile.getBytes();
+					BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path + "/" + filename));
+					bout.write(barr);
+					bout.flush();
+					bout.close();
+					System.out.println("filename=" + filename);
+					String imagepath = path + filename;
+					
+					imagepath = "http://167.172.148.60:/home/dreamquiz/media/" +filename;
+					// 34.87.81.128
+
+					// imagepath = "F://DQImages/" + filename;
+				
+					//int fileupload = service.insertImageFile(uid, imagepath);
+					
+					
+					queations.setImgOptionA(imagepath);
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		}
+		else {
+
+			queations.setImgOptionA("");
+		
+
+		}
 
 
 
+		if (!imgOptionB.isEmpty() && imgOptionB != null) {
+
+			for (MultipartFile multipartFile : imgOptionB) {
+				String filename =multipartFile.getOriginalFilename();
+				Random random = new Random();
+				String randomnumber = String.format("%04d", random.nextInt(10000));
+				filename = randomnumber + "" + filename;
+				System.out.println(path + " " + filename);
+				try {
+					System.out.println("file image ");
+					byte barr[] = multipartFile.getBytes();
+					BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path + "/" + filename));
+					bout.write(barr);
+					bout.flush();
+					bout.close();
+					System.out.println("filename=" + filename);
+					String imagepath = path + filename;
+					
+					imagepath = "http://167.172.148.60:/home/dreamquiz/media/" +filename;
+					// 34.87.81.128
+
+					 imagepath = "F://DQImages/" + filename;
+				
+					//int fileupload = service.insertImageFile(uid, imagepath);
+					
+					
+					queations.setImgOptionB(imagepath);
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		}
+		else {
+
+			queations.setImgOptionB("");
+		
+
+		}
 
 
 
+		if (!imgOptionD.isEmpty() && imgOptionD != null) {
 
+			for (MultipartFile multipartFile : imgOptionD) {
+				String filename =multipartFile.getOriginalFilename();
+				Random random = new Random();
+				String randomnumber = String.format("%04d", random.nextInt(10000));
+				filename = randomnumber + "" + filename;
+				System.out.println(path + " " + filename);
+				try {
+					System.out.println("file image ");
+					byte barr[] = multipartFile.getBytes();
+					BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path + "/" + filename));
+					bout.write(barr);
+					bout.flush();
+					bout.close();
+					System.out.println("filename=" + filename);
+					String imagepath = path + filename;
+					
+					imagepath = "http://167.172.148.60:/home/dreamquiz/media/" +filename;
+					// 34.87.81.128
+
+					 imagepath = "F://DQImages/" + filename;
+				
+					//int fileupload = service.insertImageFile(uid, imagepath);
+					
+					
+					queations.setImgOptionD(imagepath);
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		}
+		else {
+
+			queations.setImgOptionD("");
+		
+
+		}
+
+		
+		if (!imgOptionC.isEmpty() && imgOptionC != null) {
+
+			for (MultipartFile multipartFile : imgOptionC) {
+				String filename =multipartFile.getOriginalFilename();
+				Random random = new Random();
+				String randomnumber = String.format("%04d", random.nextInt(10000));
+				filename = randomnumber + "" + filename;
+				System.out.println(path + " " + filename);
+				try {
+					System.out.println("file image ");
+					byte barr[] = multipartFile.getBytes();
+					BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path + "/" + filename));
+					bout.write(barr);
+					bout.flush();
+					bout.close();
+					System.out.println("filename=" + filename);
+					String imagepath = path + filename;
+					
+					imagepath ="http://167.172.148.60:/home/dreamquiz/media/" +filename;
+					// 34.87.81.128
+
+					// imagepath = "F://DQImages/" + filename;
+				
+					//int fileupload = service.insertImageFile(uid, imagepath);
+					
+					
+					queations.setImgOptionC(imagepath);
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		}
+		else {
+
+			queations.setImgOptionC("");
+		
+
+		}
+
+		System.out.println("imgOptionC  aaaaa "+imgOptionC);
+	
+		
+		addQuestionService.addnewqueation(queations);
+		AppJsopnResponse resp = new AppJsopnResponse();
+		resp.setMessage("Queation   saved successfully");
+		resp.setStatus("True");
+		return resp;
+		
+		
+		}
+	
+
+	
+	@RequestMapping(value = "/addcfpdf", method = RequestMethod.POST)
+
+	public AppJsopnResponse addcfpdf(CurrentAffairs curentafairs,BindingResult bindingResult,
+			@RequestParam("pdffile") List<MultipartFile> pdffile,HttpSession session) throws IOException  {
+		
+		
+		String cfpdftitlefrmuser=curentafairs.getTitle();
+	
+		System.out.println(" pdf name from user : "+cfpdftitlefrmuser);
+		List<String> catitlefrmdb=addQuestionService.findallcrpdftitle();
+		System.out.println(" pdf name listsize user : "+catitlefrmdb);
+		
+		
+//		String path = "/var/lib/tomcat8/webapps/Files/";
+		// String path = "F://DQFiles/";
+		String path="167.172.148.60:/home/dreamquiz/pdfmedia/";
+		if(catitlefrmdb.contains(cfpdftitlefrmuser)) {
+		
+			AppJsopnResponse resp = new AppJsopnResponse();
+			resp.setMessage("file  Allready exits ");
+			//resp.setStatus("True");
+			System.out.println("not save file");
+			return resp;
+			
+		}
+		else {
+			
+			for (MultipartFile multipartFile : pdffile) {
+				String filename = multipartFile.getOriginalFilename();
+				Random random = new Random();
+				String randomnumber = String.format("%04d", random.nextInt(10000));
+				filename = randomnumber + "" + filename;
+				System.out.println(path + " " + filename);
+				try {
+					System.out.println("pdf file");
+					byte barr[] = multipartFile.getBytes();
+					BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path + "/" + filename));
+					bout.write(barr);
+					bout.flush();
+					bout.close();
+					System.out.println("filename=" + filename);
+					String filepath = path + filename;
+					
+					filepath = "http://167.172.148.60:/home/dreamquiz/pdfmedia/" +filename;
+					// 34.87.81.128
+
+				//	filepath = "F://DQFiles/" + filename;
+				
+					 curentafairs.setPdffile(filepath);
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		}
+					
+		addQuestionService.addnewcapdf(curentafairs);
+		
+		AppJsopnResponse resp = new AppJsopnResponse();
+		resp.setMessage("Save pdf file  success ");
+	    resp.setStatus("True");
+		System.out.println("success save pdf file");
+		
+		return resp;
+		}
+
+	
+	
+	@RequestMapping(value = "/addoldpaper", method = RequestMethod.POST)
+
+	public AppJsopnResponse addoldpaper(OldPaper oldpaper,BindingResult bindingResult,
+			@RequestParam("oppdffile") List<MultipartFile> oppdffile,HttpSession session) throws IOException  {
+		
+		
+		String oldpaperpdftitlefrmuser=oldpaper.getOptitle();
+	
+		System.out.println("  old paper pdf name from user : "+oldpaperpdftitlefrmuser);
+		List<String> oldpapertitlefrmdb=addQuestionService.findoldpapertitle();
+		System.out.println(" pdf name listsize user : "+oldpapertitlefrmdb);
+		
+		
+	       //String path = "/home/dreamquiz/pdfmedia/";
+		 String path = "F://DQOldPaperfile/";
+	//	 String path ="/home/dreamquiz/pdfmedia/";
+		if(oldpapertitlefrmdb.contains(oldpaperpdftitlefrmuser)) {
+		
+			AppJsopnResponse resp = new AppJsopnResponse();
+			resp.setMessage("old paper pdf file  Allready exits ");
+			resp.setStatus("True");
+			System.out.println("not save file");
+			return resp;
+			
+		}
+		else {
+			
+			for (MultipartFile multipartFile : oppdffile) {
+				String filename = multipartFile.getOriginalFilename();
+				Random random = new Random();
+				String randomnumber = String.format("%04d", random.nextInt(10000));
+				filename = randomnumber + "" + filename;
+				System.out.println(path + " " + filename);
+				try {
+					System.out.println("pdf file");
+					byte barr[] = multipartFile.getBytes();
+					BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path + "/" + filename));
+					bout.write(barr);
+					bout.flush();
+					bout.close();
+					System.out.println("filename=" + filename);
+					String filepath = path + filename;
+					
+					filepath = "http://167.172.148.60:/home/dreamquiz/pdfmedia/" +filename;
+					// 34.87.81.128
+
+				//	filepath = "F://DQOldPaperfile/" + filename;
+					System.out.println("file null why "+filepath);
+					oldpaper.setOppdffile(filepath);
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		}
+					
+		addQuestionService.addnewoldpaperpdf(oldpaper);
+		
+		AppJsopnResponse resp = new AppJsopnResponse();
+		resp.setMessage("Save old paperpdf file  success ");
+	    resp.setStatus("True");
+		System.out.println("success save pdf file");
+		
+		return resp;
+ }
+	
+	
+	
+	@RequestMapping(value = "/findalloldpaperpdf", method = RequestMethod.GET)
+	public List<OldPaper> findalloldpaperpdf() {
+		return addQuestionService.getoldpaperpdf();
+		
+		
+	}
+	
+	@RequestMapping(value = "/findallcurrentafairspdf", method = RequestMethod.GET)
+	public List<CurrentAffairs> findallcurrentafairspdf() {
+		return addQuestionService.getcurrentafairspdf();
+		
+		
+	}
+		
+		@RequestMapping(value = "/AddNewVideodetails", method = RequestMethod.POST)
+			public AppJsopnResponse AddNewVideodetails(Videodetails videodetails) {
+				
+				AppJsopnResponse resp = new AppJsopnResponse();
+				try {
+					String videptilebyuser=videodetails.getVtitle();
+					System.out.println("subject name "+videptilebyuser);
+					List<String> videotitlefromdb = addQuestionService.videotitlefromdb();
+					System.out.println("size of subject list "+videotitlefromdb.size());
+					if(videotitlefromdb.contains(videptilebyuser))
+					{
+						
+						
+						resp.setMessage("video title Allready exits ");
+						resp.setStatus("0");
+						System.out.println("video title");
+					
+					}
+					
+					else {
+						addQuestionService.AddNewVideodetails(videodetails);
+						System.out.println(" video details save success");
+						
+						resp.setMessage("video details save ");
+						resp.setStatus("1");
+					
+					}
+				
+
+			}
+			catch(Exception e) {
+
+				e.printStackTrace();
+			}
+				return resp;
+
+}
+		
+	
+		@RequestMapping(value = "/AddNewExamDetails", method = RequestMethod.POST)
+		public AppJsopnResponse AddNewExamDetails(Examdetails examdetails) {
+			
+			AppJsopnResponse resp = new AppJsopnResponse();
+			try {
+				String examnamebyuser=examdetails.getExamname();
+				System.out.println("subject name "+examnamebyuser);
+				List<String>examnamefromdb = addQuestionService.examnamefromdb();
+				System.out.println("size of subject list "+examnamefromdb.size());
+				if(examnamefromdb.contains(examnamebyuser))
+				{
+					
+					
+					resp.setMessage("Exam Name Allready exits ");
+					resp.setStatus("0");
+				
+					
+				}
+				
+				else {
+					addQuestionService.AddExamdetails(examdetails);
+					System.out.println("Examdetails save success");
+					
+					resp.setMessage("Examdetails save ");
+					resp.setStatus("1");
+					
+				}
+			
+
+		}
+		catch(Exception e) {
+
+			e.printStackTrace();
+		}
+			return resp;
+
+}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }
