@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.DreamQuiz.DreamQuiz.Repository.ApplyfprmRepository;
 import com.DreamQuiz.DreamQuiz.Repository.CurrentAfairsRepository;
 import com.DreamQuiz.DreamQuiz.Repository.ExamdetailsRepository;
 import com.DreamQuiz.DreamQuiz.Repository.OldPaperRepository;
@@ -13,6 +14,7 @@ import com.DreamQuiz.DreamQuiz.Repository.RegistrationRepository;
 import com.DreamQuiz.DreamQuiz.Repository.SubjectRepository;
 import com.DreamQuiz.DreamQuiz.Repository.TopicRepository;
 import com.DreamQuiz.DreamQuiz.Repository.VideodetalsRepository;
+import com.DreamQuiz.DreamQuiz.entity.Applyform;
 import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
 import com.DreamQuiz.DreamQuiz.entity.Examdetails;
 import com.DreamQuiz.DreamQuiz.entity.OldPaper;
@@ -43,6 +45,10 @@ public class AndroidService {
      
      @Autowired
      TopicRepository TopicsReposetory;
+     
+     @Autowired
+     ApplyfprmRepository applyfprmRepository;
+     
      
 	public UserRegistration newregisteration(UserRegistration registration) {
 		// TODO Auto-generated method stub
@@ -140,6 +146,11 @@ public class AndroidService {
 	public List<Topics> alltoipcbysid(long sid) {
 		// TODO Auto-generated method stub
 		return TopicsReposetory.alltoipcbysid(sid);
+	}
+
+	public Applyform saveApplyFormDetails(Applyform applyform) {
+		return applyfprmRepository.save(applyform);
+		
 	}
 
 	

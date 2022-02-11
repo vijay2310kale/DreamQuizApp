@@ -1,21 +1,28 @@
 package com.DreamQuiz.DreamQuiz.AndroidController;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.CAReponce;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.ExamListResponce;
@@ -29,7 +36,10 @@ import com.DreamQuiz.DreamQuiz.AndroidRespopnce.VideolistResponce;
 import com.DreamQuiz.DreamQuiz.Configuration.MD5;
 import com.DreamQuiz.DreamQuiz.Configuration.OTPServerMsg91;
 import com.DreamQuiz.DreamQuiz.Configuration.TokenGenration;
+import com.DreamQuiz.DreamQuiz.entity.AppJsopnResponse;
+import com.DreamQuiz.DreamQuiz.entity.Applyform;
 import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
+//import com.DreamQuiz.DreamQuiz.entity.Doc;
 import com.DreamQuiz.DreamQuiz.entity.Examdetails;
 import com.DreamQuiz.DreamQuiz.entity.OldPaper;
 import com.DreamQuiz.DreamQuiz.entity.Subject;
@@ -44,8 +54,10 @@ public class AndroidController {
 	@Autowired
 	AndroidService androidService;
 	
-	
-	
+	String uploadProductDirectory = System.getProperty("user.dir") + "/uploads/images";
+	String usersdocument = System.getProperty("user.dir") + "/uploads/usersdocument";
+	String uploadpdfDirectory = System.getProperty("user.dir") + "/uploads/pdf";
+	String serverip="http://3.7.163.87";
 	TokenGenration obj=new TokenGenration();
 	//015ae58f333335b879fa3d57699d308c
 	String gtoken="015ae58f333335b879fa3d57699d308c";
@@ -677,6 +689,195 @@ public class AndroidController {
 	return resp;
 	}
 
+	
+	
+	 @RequestMapping(value = "/ApplyForm", method = RequestMethod.POST)
+	  
+	  	public AppJsopnResponse ApplyForm (Applyform applyform, BindingResult bindingResult,@RequestParam("photo") MultipartFile photo,
+	  			@RequestParam("sscmarksheet") MultipartFile sscmarksheet,
+	  			@RequestParam("hscmarksheet") MultipartFile hscmarksheet,
+	  			@RequestParam("Graduationmarksheet") MultipartFile Graduationmarksheet,
+	  			@RequestParam("pgmarksheet") MultipartFile pgmarksheet,
+	  			@RequestParam("signature") MultipartFile signature,HttpSession session) {
+	  	  
+		 
+		 System.out.println("Appy 11111 ");
+		 AppJsopnResponse resp = new AppJsopnResponse();
+	    	  File f = new File(usersdocument);
+				if (!f.exists()) {
+					f.mkdirs();
+				}  
+	    	
+	    	  if (!photo.isEmpty()) {
+	  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+	  			String originalFileName = dateName + "-"
+	  					+ photo.getOriginalFilename().replace(" ", "-").toLowerCase();
+	  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+	  			System.out.println("file name path "+ fileNameAndPath);
+	  		 	try {
+	  				Files.write(fileNameAndPath, photo.getBytes());
+	  			} catch (IOException e) {
+	  				e.printStackTrace();
+	  			}
+	  			String filepath=fileNameAndPath.toString();
+	  			applyform.setPhoto(serverip+filepath);                   
+	  			 System.out.println("check path  "+filepath);
+	  			
+	  			
+	  		} else {
+	  			
+	  			resp.setMessage("userphoto name is empty....");
+	  		}
+	    	  
+	    	  
+	    	  if (!sscmarksheet.isEmpty()) {
+		  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		  			String originalFileName = dateName + "-"
+		  					+ sscmarksheet.getOriginalFilename().replace(" ", "-").toLowerCase();
+		  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+		  			System.out.println("file name path "+ fileNameAndPath);
+		  			try {
+		  				Files.write(fileNameAndPath, sscmarksheet.getBytes());
+		  			} catch (IOException e) {
+		  				e.printStackTrace();
+		  			}
+		  			String filepath=fileNameAndPath.toString();
+		  			applyform.setSscmarksheet(serverip+filepath);                   
+		  			 System.out.println("check path  "+filepath);
+		  			
+		  			
+		  		} else {
+		  			
+		  			resp.setMessage("sscmarksheet name is empty....");
+		  		}
+	    	  if (!hscmarksheet.isEmpty()) {
+		  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		  			String originalFileName = dateName + "-"
+		  					+ hscmarksheet.getOriginalFilename().replace(" ", "-").toLowerCase();
+		  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+		  			System.out.println("file name path "+ fileNameAndPath);
+		  			try {
+		  				Files.write(fileNameAndPath, hscmarksheet.getBytes());
+		  			} catch (IOException e) {
+		  				e.printStackTrace();
+		  			}
+		  			String filepath=fileNameAndPath.toString();
+		  			applyform.setHscmarksheet(serverip+filepath);                   
+		  			 System.out.println("check path  "+filepath);
+		  			
+		  			
+		  		} else {
+		  			
+		  			resp.setMessage("hsc marksheet name is empty....");
+		  		}
+	    	 
+	    	  if (!Graduationmarksheet.isEmpty()) {
+		  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		  			String originalFileName = dateName + "-"
+		  					+ Graduationmarksheet.getOriginalFilename().replace(" ", "-").toLowerCase();
+		  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+		  			System.out.println("file name path "+ fileNameAndPath);
+		  			try {
+		  				Files.write(fileNameAndPath, Graduationmarksheet.getBytes());
+		  			} catch (IOException e) {
+		  				e.printStackTrace();
+		  			}
+		  			String filepath=fileNameAndPath.toString();
+		  			applyform.setGraduationmarksheet(serverip+filepath);                  
+		  			 System.out.println("check path  "+filepath);
+		  			
+		  			
+		  		} else {
+		  			
+		  			resp.setMessage("Graduationmarksheet name is empty....");
+		  		}
+	    	 
+	    	  if (!pgmarksheet.isEmpty()) {
+		  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		  			String originalFileName = dateName + "-"
+		  					+ pgmarksheet.getOriginalFilename().replace(" ", "-").toLowerCase();
+		  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+		  			System.out.println("file name path "+ fileNameAndPath);
+		  			try {
+		  				Files.write(fileNameAndPath, pgmarksheet.getBytes());
+		  			} catch (IOException e) {
+		  				e.printStackTrace();
+		  			}
+		  			String filepath=fileNameAndPath.toString();
+		  			applyform.setPgmarksheet(serverip+filepath);        
+		  			 System.out.println("check path  "+filepath);
+		  			
+		  			
+		  		} else {
+		  			
+		  			resp.setMessage("pgmarksheet name is empty....");
+		  		}
+	    	  
+	    	  
+	    	  
+	    	  
+	    	  if (!signature.isEmpty()) {
+		  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		  			String originalFileName = dateName + "-"
+		  					+ signature.getOriginalFilename().replace(" ", "-").toLowerCase();
+		  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+		  			System.out.println("file name path "+ fileNameAndPath);
+		  			try {
+		  				Files.write(fileNameAndPath, signature.getBytes());
+		  			} catch (IOException e) {
+		  				e.printStackTrace();
+		  			}
+		  			String filepath=fileNameAndPath.toString();
+		  			applyform.setSignature(serverip+filepath);
+		  			 System.out.println("check path  "+filepath);
+		  			
+		  			
+		  		} else {
+		  			
+		  			resp.setMessage("signature name is empty....");
+		  		}
+	    	  
+	    	  long time = System.currentTimeMillis();
+	  		java.sql.Timestamp date = new java.sql.Timestamp(time);
+	  		String datetimespan=String.valueOf(date);
+	  		applyform.setDatetimespan(datetimespan);
+	  		
+	    	  androidService.saveApplyFormDetails(applyform);
+	    	  
+	  	     resp.setMessage("file save in db...");
+	  		resp.setStatus("True");
+	  		resp.setData("");
+	  		return resp;
+	  	}
+
+	   
+	      //sftp://ubuntu@3.7.163.87/home/ubuntu/project/uploads
+	      
+	      
+	      
+	          
+	      
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
 

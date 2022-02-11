@@ -5,9 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.DreamQuiz.DreamQuiz.Repository.CurrentAfairsRepository;
+//import com.DreamQuiz.DreamQuiz.Repository.DocRepository;
 import com.DreamQuiz.DreamQuiz.Repository.ExamdetailsRepository;
+//import com.DreamQuiz.DreamQuiz.Repository.FileDBRepository;
 import com.DreamQuiz.DreamQuiz.Repository.OldPaperRepository;
 import com.DreamQuiz.DreamQuiz.Repository.QueationRepository;
 import com.DreamQuiz.DreamQuiz.Repository.SubTopicRepository;
@@ -15,6 +18,7 @@ import com.DreamQuiz.DreamQuiz.Repository.SubjectRepository;
 import com.DreamQuiz.DreamQuiz.Repository.TopicRepository;
 import com.DreamQuiz.DreamQuiz.Repository.VideodetalsRepository;
 import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
+//import com.DreamQuiz.DreamQuiz.entity.Doc;
 import com.DreamQuiz.DreamQuiz.entity.Examdetails;
 import com.DreamQuiz.DreamQuiz.entity.OldPaper;
 import com.DreamQuiz.DreamQuiz.entity.Queations;
@@ -42,6 +46,14 @@ public class AddQuestionServiceImpl {
 	VideodetalsRepository videodetalsRepository;
 	@Autowired
 	ExamdetailsRepository examdetailsRepository ;
+//	@Autowired
+//	DocRepository docRepository;
+	
+//	 @Autowired
+//	  private FileDBRepository fileDBRepository;
+
+	
+	
 	public Subject addNewSubject(Subject subject) {
 		
 		return subjectRepository.save(subject);
@@ -184,19 +196,59 @@ public class AddQuestionServiceImpl {
 	 
 	
 	
+//	public Doc savefile(MultipartFile file) {
+//		String docname=file.getOriginalFilename();
+//		try {
+//			Doc doc=new Doc(docname,file.getContentType(),file.getBytes());
+//			return docRepository.save(doc);
+//		}
+//		
+//		catch (Exception e) {
+//			e.printStackTrace();
+//			
+//		}
+//		
+//		
+//		return null;
+//		
+//	}
+//	
+//	
+//	
+//	public Optional<Doc>getFile(long fileId){
+//		return docRepository.findById(fileId);
+//		
+//	}
+//	
+//	
+//	public List<Doc> getfiles(){
+//		
+//		return docRepository.findAll();
+//	}
+//
+//	public List<Doc> findaladbdata() {
+//		// TODO Auto-generated method stub
+//		return docRepository.findAll();
+//	}
+//	
+//	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+//	
+//	public FileDB store(MultipartFile file) throws IOException {
+//	    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//	    FileDB FileDB = new FileDB(fileName, file.getContentType(), file.getBytes());
+//
+//	    return fileDBRepository.save(FileDB);
+//	  }
+//
+//	  public FileDB getFile(String id) {
+//	    return fileDBRepository.findById(id).get();
+//	  }
+//	  
+//	  public Stream<FileDB> getAllFiles() {
+//	    return fileDBRepository.findAll().stream();
+//	  }
+
 	
 	
 	
