@@ -30,6 +30,7 @@ import com.DreamQuiz.DreamQuiz.AndroidRespopnce.LoginResponce;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.OldPaperResponce;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.RegiResponce;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.SubjectListResponce;
+import com.DreamQuiz.DreamQuiz.AndroidRespopnce.TopicNotesRepsponce;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.TopiclistResponce;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.UserRegisterRepo;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.VideolistResponce;
@@ -44,6 +45,7 @@ import com.DreamQuiz.DreamQuiz.entity.Examdetails;
 import com.DreamQuiz.DreamQuiz.entity.OldPaper;
 import com.DreamQuiz.DreamQuiz.entity.Subject;
 import com.DreamQuiz.DreamQuiz.entity.Topics;
+import com.DreamQuiz.DreamQuiz.entity.Topicsnotespdf;
 import com.DreamQuiz.DreamQuiz.entity.UserRegistration;
 import com.DreamQuiz.DreamQuiz.entity.Videodetails;
 import com.DreamQuiz.DreamQuiz.serviceimpl.AndroidService;
@@ -54,10 +56,10 @@ public class AndroidController {
 	@Autowired
 	AndroidService androidService;
 	
-	String uploadProductDirectory = System.getProperty("user.dir") + "/uploads/images";
-	String usersdocument = System.getProperty("user.dir") + "/uploads/usersdocument";
-	String uploadpdfDirectory = System.getProperty("user.dir") + "/uploads/pdf";
-	String serverip="http://3.7.163.87";
+	String uploadProductDirectory = System.getProperty("user.dir") + "/DMImages/images/";
+	
+	
+	String serverip="http://3.7.163.87:9999";
 	TokenGenration obj=new TokenGenration();
 	//015ae58f333335b879fa3d57699d308c
 	String gtoken="015ae58f333335b879fa3d57699d308c";
@@ -516,7 +518,7 @@ public class AndroidController {
 
 	
 	@RequestMapping(value = "/api/getallVideolist", method = RequestMethod.GET)
-	public VideolistResponce getallvideodetails(@RequestHeader("user_id") String user_id,@RequestHeader("token") String token)throws Exception {
+	public VideolistResponce getallvideodetails(@RequestHeader("vcategoryname") String vcategoryname,@RequestHeader("user_id") String user_id,@RequestHeader("token") String token)throws Exception {
 		
 		
 		
@@ -530,7 +532,7 @@ public class AndroidController {
 		if(token.equals(gtoken)) {
 		if(uidfrondb.contains(uid)) {
 			
-			List<Videodetails> videoList=androidService.videoList();
+			List<Videodetails> videoList=androidService.videoList(vcategoryname);
 			
 			resp.setMessage("list of videos");
 			resp.setStatus("1");
@@ -703,7 +705,7 @@ public class AndroidController {
 		 
 		 System.out.println("Appy 11111 ");
 		 AppJsopnResponse resp = new AppJsopnResponse();
-	    	  File f = new File(usersdocument);
+	    	  File f = new File(uploadProductDirectory);
 				if (!f.exists()) {
 					f.mkdirs();
 				}  
@@ -712,15 +714,16 @@ public class AndroidController {
 	  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 	  			String originalFileName = dateName + "-"
 	  					+ photo.getOriginalFilename().replace(" ", "-").toLowerCase();
-	  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+	  			Path fileNameAndPath = Paths.get(uploadProductDirectory, originalFileName);
 	  			System.out.println("file name path "+ fileNameAndPath);
+	  			String path=serverip+"/DMImages/images/"+originalFileName;
 	  		 	try {
 	  				Files.write(fileNameAndPath, photo.getBytes());
 	  			} catch (IOException e) {
 	  				e.printStackTrace();
 	  			}
 	  			String filepath=fileNameAndPath.toString();
-	  			applyform.setPhoto(serverip+filepath);                   
+	  			applyform.setPhoto(path);                   
 	  			 System.out.println("check path  "+filepath);
 	  			
 	  			
@@ -734,15 +737,16 @@ public class AndroidController {
 		  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		  			String originalFileName = dateName + "-"
 		  					+ sscmarksheet.getOriginalFilename().replace(" ", "-").toLowerCase();
-		  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+		  			Path fileNameAndPath = Paths.get(uploadProductDirectory, originalFileName);
 		  			System.out.println("file name path "+ fileNameAndPath);
+		  			String path=serverip+"/DMImages/images/"+originalFileName;
 		  			try {
 		  				Files.write(fileNameAndPath, sscmarksheet.getBytes());
 		  			} catch (IOException e) {
 		  				e.printStackTrace();
 		  			}
 		  			String filepath=fileNameAndPath.toString();
-		  			applyform.setSscmarksheet(serverip+filepath);                   
+		  			applyform.setSscmarksheet(path);                   
 		  			 System.out.println("check path  "+filepath);
 		  			
 		  			
@@ -754,15 +758,16 @@ public class AndroidController {
 		  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		  			String originalFileName = dateName + "-"
 		  					+ hscmarksheet.getOriginalFilename().replace(" ", "-").toLowerCase();
-		  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+		  			Path fileNameAndPath = Paths.get(uploadProductDirectory, originalFileName);
 		  			System.out.println("file name path "+ fileNameAndPath);
+		  			String path=serverip+"/DMImages/images/"+originalFileName;
 		  			try {
 		  				Files.write(fileNameAndPath, hscmarksheet.getBytes());
 		  			} catch (IOException e) {
 		  				e.printStackTrace();
 		  			}
 		  			String filepath=fileNameAndPath.toString();
-		  			applyform.setHscmarksheet(serverip+filepath);                   
+		  			applyform.setHscmarksheet(path);                   
 		  			 System.out.println("check path  "+filepath);
 		  			
 		  			
@@ -775,15 +780,16 @@ public class AndroidController {
 		  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		  			String originalFileName = dateName + "-"
 		  					+ Graduationmarksheet.getOriginalFilename().replace(" ", "-").toLowerCase();
-		  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+		  			Path fileNameAndPath = Paths.get(uploadProductDirectory, originalFileName);
 		  			System.out.println("file name path "+ fileNameAndPath);
+		  			String path=serverip+"/DMImages/images/"+originalFileName;
 		  			try {
 		  				Files.write(fileNameAndPath, Graduationmarksheet.getBytes());
 		  			} catch (IOException e) {
 		  				e.printStackTrace();
 		  			}
 		  			String filepath=fileNameAndPath.toString();
-		  			applyform.setGraduationmarksheet(serverip+filepath);                  
+		  			applyform.setGraduationmarksheet(path);                  
 		  			 System.out.println("check path  "+filepath);
 		  			
 		  			
@@ -796,15 +802,16 @@ public class AndroidController {
 		  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		  			String originalFileName = dateName + "-"
 		  					+ pgmarksheet.getOriginalFilename().replace(" ", "-").toLowerCase();
-		  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+		  			Path fileNameAndPath = Paths.get(uploadProductDirectory, originalFileName);
 		  			System.out.println("file name path "+ fileNameAndPath);
+		  			String path=serverip+"/DMImages/images/"+originalFileName;
 		  			try {
 		  				Files.write(fileNameAndPath, pgmarksheet.getBytes());
 		  			} catch (IOException e) {
 		  				e.printStackTrace();
 		  			}
 		  			String filepath=fileNameAndPath.toString();
-		  			applyform.setPgmarksheet(serverip+filepath);        
+		  			applyform.setPgmarksheet(path);        
 		  			 System.out.println("check path  "+filepath);
 		  			
 		  			
@@ -820,15 +827,16 @@ public class AndroidController {
 		  			String dateName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		  			String originalFileName = dateName + "-"
 		  					+ signature.getOriginalFilename().replace(" ", "-").toLowerCase();
-		  			Path fileNameAndPath = Paths.get(usersdocument, originalFileName);
+		  			Path fileNameAndPath = Paths.get(uploadProductDirectory, originalFileName);
 		  			System.out.println("file name path "+ fileNameAndPath);
+		  			String path=serverip+"/DMImages/images/"+originalFileName;
 		  			try {
 		  				Files.write(fileNameAndPath, signature.getBytes());
 		  			} catch (IOException e) {
 		  				e.printStackTrace();
 		  			}
 		  			String filepath=fileNameAndPath.toString();
-		  			applyform.setSignature(serverip+filepath);
+		  			applyform.setSignature(path);
 		  			 System.out.println("check path  "+filepath);
 		  			
 		  			
@@ -851,6 +859,69 @@ public class AndroidController {
 	  	}
 
 	   
+	 @RequestMapping(value = "/api/getalltopicnotespdf", method = RequestMethod.GET)
+		public TopicNotesRepsponce getalltopicnotespdf(@RequestHeader("user_id") String user_id,@RequestHeader("token") String token,@RequestHeader("topicid") String topicid) throws Exception {
+			
+			
+		
+			//String generatedtoken=obj.TokenGenration();
+		 TopicNotesRepsponce listresp= new TopicNotesRepsponce();
+			try {
+	             long uid=Long.valueOf(user_id);
+			
+			List<Long> uidfrondb=androidService.findalluserid();
+			if(token.equals(gtoken)) {
+			if(uidfrondb.contains(uid)) {
+				
+				List<Topicsnotespdf> topicnotesList=androidService.topicnotesList(topicid);
+				
+				listresp.setMessage("list of CAPDF");
+				listresp.setStatus("1");
+				
+				listresp.setTopicNotesRepsponce(topicnotesList);
+			}
+			else {
+				listresp.setMessage("User not Register");
+				listresp.setStatus("0");
+				
+				
+			}
+			}else {
+				listresp.setMessage("invalid token");
+				listresp.setStatus("0");
+				
+				
+			}
+			 
+			}catch (Exception e) {
+
+				e.printStackTrace();
+			}
+		return listresp;
+		}
+
+
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	      //sftp://ubuntu@3.7.163.87/home/ubuntu/project/uploads
 	      
 	      

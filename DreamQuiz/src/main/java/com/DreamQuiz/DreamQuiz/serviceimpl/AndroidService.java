@@ -13,6 +13,7 @@ import com.DreamQuiz.DreamQuiz.Repository.OldPaperRepository;
 import com.DreamQuiz.DreamQuiz.Repository.RegistrationRepository;
 import com.DreamQuiz.DreamQuiz.Repository.SubjectRepository;
 import com.DreamQuiz.DreamQuiz.Repository.TopicRepository;
+import com.DreamQuiz.DreamQuiz.Repository.TopisNotesRepository;
 import com.DreamQuiz.DreamQuiz.Repository.VideodetalsRepository;
 import com.DreamQuiz.DreamQuiz.entity.Applyform;
 import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
@@ -20,6 +21,7 @@ import com.DreamQuiz.DreamQuiz.entity.Examdetails;
 import com.DreamQuiz.DreamQuiz.entity.OldPaper;
 import com.DreamQuiz.DreamQuiz.entity.Subject;
 import com.DreamQuiz.DreamQuiz.entity.Topics;
+import com.DreamQuiz.DreamQuiz.entity.Topicsnotespdf;
 import com.DreamQuiz.DreamQuiz.entity.UserRegistration;
 import com.DreamQuiz.DreamQuiz.entity.Videodetails;
 
@@ -49,6 +51,9 @@ public class AndroidService {
      @Autowired
      ApplyfprmRepository applyfprmRepository;
      
+     
+     @Autowired
+ 	TopisNotesRepository topisNotesRepository;
      
 	public UserRegistration newregisteration(UserRegistration registration) {
 		// TODO Auto-generated method stub
@@ -128,9 +133,9 @@ public class AndroidService {
 		return currentAfairsRepository.getallCA();
 	}
 
-	public List<Videodetails> videoList() {
+	public List<Videodetails> videoList(String vcategoryname) {
 		// TODO Auto-generated method stub
-		return videodetalsRepository.allvideolist();
+		return videodetalsRepository.allvideolist(vcategoryname);
 	}
 
 	public List<Examdetails> Examdetails() {
@@ -151,6 +156,11 @@ public class AndroidService {
 	public Applyform saveApplyFormDetails(Applyform applyform) {
 		return applyfprmRepository.save(applyform);
 		
+	}
+
+	public List<Topicsnotespdf> topicnotesList(String topicid) {
+		// TODO Auto-generated method stub
+		return topisNotesRepository.topicnotesList(topicid);
 	}
 
 	

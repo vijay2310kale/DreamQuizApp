@@ -36,6 +36,18 @@ public class CurrentAffairs {
 	 
 	 @Column(name = "pdffile") 
 		private String pdffile;
+	 
+	 
+	 @Column(name = "thumbnail") 
+		private String thumbnail;
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 
 	public Long getCaid() {
 		return caid;

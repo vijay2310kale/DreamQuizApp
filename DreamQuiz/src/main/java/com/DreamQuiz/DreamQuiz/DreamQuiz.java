@@ -3,6 +3,8 @@ package com.DreamQuiz.DreamQuiz;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -12,10 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class DreamQuiz {
 	
 	
-	@RequestMapping("/test")
+	@RequestMapping(value ="/test", method = RequestMethod.GET)
+	@ResponseBody
 		public String testing() {
 		System.out.println("hello dreamquiz");
-		return "hello dreamquiz";
+		return  "redirect:admin/image";
 		
 	}
 	

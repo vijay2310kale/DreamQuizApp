@@ -47,6 +47,14 @@ public class OldPaper {
 		return opid;
 	}
 
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
 	public void setOpid(Long opid) {
 		this.opid = opid;
 	}

@@ -19,8 +19,6 @@ public interface SubTopicRepository extends JpaRepository<SubTopics,Long> {
 	@Transactional
 	@Modifying
 	
-	
-	
 	@Query(nativeQuery = true, value = "SELECT * FROM sub_topics where tid=:tid")
 	List<SubTopics> getSubTopicsbytid(Long tid);
 

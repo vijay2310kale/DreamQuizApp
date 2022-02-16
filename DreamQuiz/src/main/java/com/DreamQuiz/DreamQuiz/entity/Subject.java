@@ -25,7 +25,17 @@ public class Subject {
 	 @Column(name = "subjectName") 
 	private String subjectName;
 	 
+	 @Column(name = "thumbnail") 
+		private String thumbnail;
 	 
+	 
+	 
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 	public Long getSid() {
 		return sid;
 	}

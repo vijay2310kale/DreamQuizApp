@@ -22,8 +22,8 @@ public interface VideodetalsRepository extends JpaRepository<Videodetails,Long> 
 	List<String> videotitlefromdb();
 
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM videodetails")
-	List<Videodetails> allvideolist();
+	@Query(nativeQuery = true, value = "SELECT * FROM videodetails where vcategoryname=:vcategoryname")
+	List<Videodetails> allvideolist(String vcategoryname);
 	
 	
 

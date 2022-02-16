@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.DreamQuiz.DreamQuiz.Repository.CurrentAfairsRepository;
 //import com.DreamQuiz.DreamQuiz.Repository.DocRepository;
@@ -16,6 +15,7 @@ import com.DreamQuiz.DreamQuiz.Repository.QueationRepository;
 import com.DreamQuiz.DreamQuiz.Repository.SubTopicRepository;
 import com.DreamQuiz.DreamQuiz.Repository.SubjectRepository;
 import com.DreamQuiz.DreamQuiz.Repository.TopicRepository;
+import com.DreamQuiz.DreamQuiz.Repository.TopisNotesRepository;
 import com.DreamQuiz.DreamQuiz.Repository.VideodetalsRepository;
 import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
 //import com.DreamQuiz.DreamQuiz.entity.Doc;
@@ -25,6 +25,7 @@ import com.DreamQuiz.DreamQuiz.entity.Queations;
 import com.DreamQuiz.DreamQuiz.entity.SubTopics;
 import com.DreamQuiz.DreamQuiz.entity.Subject;
 import com.DreamQuiz.DreamQuiz.entity.Topics;
+import com.DreamQuiz.DreamQuiz.entity.Topicsnotespdf;
 import com.DreamQuiz.DreamQuiz.entity.Videodetails;
 
 @Service
@@ -46,8 +47,8 @@ public class AddQuestionServiceImpl {
 	VideodetalsRepository videodetalsRepository;
 	@Autowired
 	ExamdetailsRepository examdetailsRepository ;
-//	@Autowired
-//	DocRepository docRepository;
+	@Autowired
+	TopisNotesRepository topisNotesRepository;
 	
 //	 @Autowired
 //	  private FileDBRepository fileDBRepository;
@@ -191,6 +192,16 @@ public class AddQuestionServiceImpl {
 		public Examdetails AddExamdetails(Examdetails examdetails) {
 			return examdetailsRepository.save(examdetails);
 			// TODO Auto-generated method stub
+			
+		}
+
+		public List<String> findalltopicsNotesPdf() {
+			// TODO Auto-generated method stub
+			return topisNotesRepository.findalltopicsNotesPdf();
+		}
+
+		public Topicsnotespdf addnewtopicspdf(Topicsnotespdf topicsNotesPdf) {
+			return topisNotesRepository.save(topicsNotesPdf);
 			
 		}
 	 

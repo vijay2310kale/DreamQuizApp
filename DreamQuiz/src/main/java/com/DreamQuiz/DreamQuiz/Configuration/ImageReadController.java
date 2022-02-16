@@ -16,27 +16,23 @@ public class ImageReadController {
 	
 	
 //	String uploadProductDirectory ="http://prismitservice.com/Vijay/";
-	String uploadProductDirectory = System.getProperty("user.dir") + "/uploads/images";
-	String uploadpdfDirectory = System.getProperty("user.dir") + "/uploads/pdf";
-	
-	@RequestMapping("/uploads")
-	
-	public String geBooktProductImage(@PathVariable("queationImage") String queationImage, HttpServletResponse response) {
-		try {
-			byte b[] = Files.readAllBytes(Paths.get(uploadProductDirectory + queationImage));
-			response.setContentLength(b.length);
-			response.setContentType("image/jpg");
-			ServletOutputStream os = response.getOutputStream();
-			os.write(b);
-			os.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
+	String uploadProductDirectory = System.getProperty("user.dir") + "/DMImages/images/";
 
-	}
+	String allpdffiles = System.getProperty("user.dir") + "/pdffils/allpdffiles/";
 	
-	@RequestMapping("/uploads/files")
+	/*
+	 * @RequestMapping("/uploads/images/{queationImage}") public String
+	 * geBooktProductImage(@PathVariable("queationImage") String queationImage,
+	 * HttpServletResponse response) { try { byte b[] =
+	 * Files.readAllBytes(Paths.get(uploadProductDirectory + queationImage));
+	 * response.setContentLength(b.length); response.setContentType("image/jpg");
+	 * ServletOutputStream os = response.getOutputStream(); os.write(b); os.flush();
+	 * } catch (IOException e) { e.printStackTrace(); } return null;
+	 * 
+	 * }
+	 */
+	
+	@RequestMapping("/DMImages/images/{files}")
 	public String getBannerImage(@PathVariable("files") String files, HttpServletResponse response) {
 		try {
 			byte b[] = Files.readAllBytes(Paths.get(uploadProductDirectory + files));
@@ -52,13 +48,13 @@ public class ImageReadController {
 
 	}
 
-	@RequestMapping("/uploads/pdf")
+	@RequestMapping("/pdffils/allpdffiles/{files}")
 	public String getpdf(@PathVariable("files") String files, HttpServletResponse response) {
 		try {
 			
 			
 			System.out.println("  vijay 1 ");
-			byte b[] = Files.readAllBytes(Paths.get(uploadpdfDirectory + files));
+			byte b[] = Files.readAllBytes(Paths.get(allpdffiles + files));
 			response.setContentLength(b.length);
 			System.out.println("  vijay 2 ");
 			response.setContentType("application/pdf");

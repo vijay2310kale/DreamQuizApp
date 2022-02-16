@@ -25,7 +25,7 @@ public class AdminController {
 	
 	@RequestMapping("/")
 	public String branchLogin(Model model) {
-		System.out.println("manojssss");
+		//System.out.println("manojssss");
 
 		return "admin/sign-in";
 
@@ -55,8 +55,8 @@ public class AdminController {
 	@RequestMapping(value="/admin/addnewtopic",method= RequestMethod.GET)
 	public String addnewtopic() {
 		
-		System.out.println("hello");
-		System.out.println("hello3333");
+		//System.out.println("hello");
+		//System.out.println("hello3333");
 		return "admin/addnewtopic";
 		//http://localhost:9999/sign-in
 	 
