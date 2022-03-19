@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.DreamQuiz.DreamQuiz.Repository.CurrentAfairsRepository;
 //import com.DreamQuiz.DreamQuiz.Repository.DocRepository;
 import com.DreamQuiz.DreamQuiz.Repository.ExamdetailsRepository;
+import com.DreamQuiz.DreamQuiz.Repository.NewRegiRepository;
 //import com.DreamQuiz.DreamQuiz.Repository.FileDBRepository;
 import com.DreamQuiz.DreamQuiz.Repository.OldPaperRepository;
 import com.DreamQuiz.DreamQuiz.Repository.QueationRepository;
@@ -20,6 +21,7 @@ import com.DreamQuiz.DreamQuiz.Repository.VideodetalsRepository;
 import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
 //import com.DreamQuiz.DreamQuiz.entity.Doc;
 import com.DreamQuiz.DreamQuiz.entity.Examdetails;
+import com.DreamQuiz.DreamQuiz.entity.NewRegister;
 import com.DreamQuiz.DreamQuiz.entity.OldPaper;
 import com.DreamQuiz.DreamQuiz.entity.Queations;
 import com.DreamQuiz.DreamQuiz.entity.SubTopics;
@@ -50,8 +52,8 @@ public class AddQuestionServiceImpl {
 	@Autowired
 	TopisNotesRepository topisNotesRepository;
 	
-//	 @Autowired
-//	  private FileDBRepository fileDBRepository;
+	 @Autowired
+	  private NewRegiRepository newRegiRepository;
 
 	
 	
@@ -202,6 +204,11 @@ public class AddQuestionServiceImpl {
 
 		public Topicsnotespdf addnewtopicspdf(Topicsnotespdf topicsNotesPdf) {
 			return topisNotesRepository.save(topicsNotesPdf);
+			
+		}
+
+		public void savenewregi(NewRegister newRegister) {
+		 newRegiRepository.save(newRegister);
 			
 		}
 	 

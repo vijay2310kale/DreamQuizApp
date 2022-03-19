@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head th:replace="admin/common/layout :: admin-header-link"></head>
+
+<body>
+    <!-- Begin page -->
+    <div id="wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar" th:replace="admin/common/layout :: admin-navbar"></div>
+        <!-- Top Bar End -->
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="left side-menu" th:replace="admin/common/layout :: admin-sidebar"></div>
+        <!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+            <!-- test -->
+                <div class="container-fluid">
+                    <div class="row">
+                    
+                        <div class="col-sm-12">
+                            <div class="page-title-box">
+                                <div class="card m-b-20">
+                                    <div class="card-body">
+                                        <div class="row ">
+                                        <div class="col-md-12 m-b-15">
+												<h4 class="mt-0 header-title">
+													   Products Details
+													<button class="btn btn-primary btn-md m-1" type="button"
+														data-toggle="modal" data-target="#addModal"
+														style="float: right;">Add Product</button>
+												</h4>
+												
+<!-- 												<div class="row"> -->
+<!-- 												 <div id="search" class="col-md-4"> -->
+<!-- 	                                                <label for="selectMainCategory"></label>  -->
+<!-- 	                                                <select class="form-control form-control-rounded" name="mainCategoryId" id="mainCategoryId2" required> -->
+<!--                                                 	</select> -->
+<!--                                             	</div> -->
+<!--                                             	 <div id="search" class="col-md-4"> -->
+<!-- 	                                                <label for="selectSubCategory"></label>  -->
+<!-- 	                                                <select class="form-control form-control-rounded" name="subCategoryId" id="subCategoryId2" required> -->
+<!--                                                 	</select> -->
+<!--                                             	</div> -->
+<!--                                             	</div> -->
+												
+											</div>
+                                            <div class="col-md-12 table-responsive">
+                                                
+                                             <table class=" table table-striped dt-responsive nowrap" id="datatable-buttons" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+<!--                                                          <th>Id</th> -->
+                                                        <th>Actions</th>
+                                                        
+                                                          <th>Product Name</th>    
+                                                           <th>Product Image1</th>
+                                                         <th>Product Image2</th>
+                                                           <th>Product Image3</th>   
+                                                                                                         
+                                                        
+                                                        <th>Product NetPrice</th>                                                                                                             
+                                                         <th>Product Selling Price</th>
+                                                         <th>Discount Amount</th>
+                                                          <th>Discount Percentage</th>
+                                                           
+                                                                                                  
+                                                        <th>Available Quantity</th>
+                                                         
+                                                          
+                                                           <th>Product Description</th>
+                                                      
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="showData">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade " id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Add Product</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="insert">
+                                        <div class="row">
+                                        
+                                           
+                                              
+                                              
+                                               <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Product Name</label>
+                                                <input class="form-control form-control-rounded" name="productName"  type="text"  title="only alphabets and spaces allowed" required />
+                                            </div>
+                                             <!-- <div class="col-md-6 form-group mb-3">
+                                                <label for="SubCategory">Product type</label> 
+                                                <select class="form-control form-control-rounded" name="productType" id="productType" required>
+                                                 <option value="" >Product Type</option>
+                                                <option value="Regular / Subscription">Regular/Subscription</option>
+                                                 <option value="Bulk">Bulk</option>
+                                                </select>
+                                            </div>-->
+                                             
+                                              <div class="col-md-6 form-group mb-3">
+                                                <label for="subGroupTitle"> Product Image1</label>
+                                                <input class="form-control form-control-rounded" name="productImage1" id="productImage1" type="file" accept="image/x-png,image/jpeg,image/jpg"  />
+                                              </div>
+                                             
+                                              <div class="col-md-6 form-group mb-3">
+                                                <label for="subGroupTitle"> Product Image2</label>
+                                                <input class="form-control form-control-rounded" name="productImage2" id="productImage2" type="file" accept="image/x-png,image/jpeg,image/jpg"  />
+                                              </div>
+                                              
+                                               <div class="col-md-6 form-group mb-3">
+                                                <label for="subGroupTitle"> Product Image3</label>
+                                                <input class="form-control form-control-rounded" name="productImage3" id="productImage3" type="file"  accept="image/x-png,image/jpeg,image/jpg" />
+                                              </div>
+                                           
+                                             
+                                             <!--<div class="col-md-6 form-group mb-3">
+                                                <label for="SubCategory">Is Available for Subscription </label> 
+                                                <select class="form-control form-control-rounded" name="isAvailableForSubscription" id="isAvailableForSubscription" >
+                                                 <option value="" >Is available for Subscription</option>
+                                                <option value="Yes">Yes</option>
+                                                 <option value="No">No</option>
+                                                </select>
+                                            </div >-->
+                                            
+                                           
+                                             
+                                              <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Product Net Price</label>
+                                                <input class="form-control form-control-rounded" name="productNetPrice" id="productNetPrice" step=".01" pattern="[0-9]+" type="number"   />
+                                            </div>
+                                              <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Product Selling Price</label>
+                                                <input class="form-control form-control-rounded" name="productSellingPrice" step=".01" pattern="[0-9]+" id="productSellingPrice" type="number"    />
+                                            </div>
+                                             <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Discount Amount</label>
+                                                <input class="form-control form-control-rounded" name="discountAmount" step=".01" pattern="[0-9]+" id="discountAmount" type="number" readonly="readonly"  />
+                                            </div>
+                                            
+                                             <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Discount Percentage</label>
+                                                <input class="form-control form-control-rounded" readonly="readonly" name="discountPercentage" id="discountPercentage" type="number" step=".01" pattern="[0-9]+"   />
+                                            </div>
+                                             
+                                             <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Available Quantity</label>
+                                                <input class="form-control form-control-rounded" name="availableQuantity" id="availableQuantity" type="text"   />
+                                            </div>
+                                         
+                                          
+                                          <!--<div class="row col-lg-12 form-group mb-3" id="bulk" style="display:none;">
+                                         
+                                             <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Product Price per Gram/Ml</label>
+                                                <input class="form-control form-control-rounded" name="productPricePerGramOrMl" id="productPricePerGramOrMl" type="number" step=".001" pattern="[0-9]+"   />
+                                            </div>
+                                             <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Available Quantity in Kg/Ltr</label>
+                                                <input class="form-control form-control-rounded" name="availableQuantityInKgOrLtr" id="availableQuantityInKgOrLtr" type="number" step=".01" pattern="[0-9]+"   />
+                                            </div>
+                                             <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Minimum Quantity in Kg/Ltr</label>
+                                                <input class="form-control form-control-rounded" name="minQuantityInKgOrLtr" id="minQuantityInKgOrLtr" type="number" step=".01" pattern="[0-9]+"   />
+                                            </div>
+                                            
+                                            </div>
+                                            -->
+                                            <div class="col-md-6 form-group mb-3">
+												<label for="SubCategory">Product Type</label> <select
+													class="form-control form-control-rounded"
+													name="productType" >
+													<option value="">Product Type</option>
+													<option value="New Arrivals">New Arrivals</option>
+													<option value="Featured Products">Featured
+														Products</option>
+													<option value="Today's Deal">Today's Deal</option>
+												</select>
+											</div>
+                                            <div class="col-md-12 form-group mb-3">
+                                                <label for="subCategory">Product Description </label>
+                                                <textarea cols="4"  rows="4" class="form-control form-control-rounded" name="productDesc" id="productDesc"  title="only alphabets and spaces allowed"  ></textarea>
+                                            </div>
+<!--                                             <div class="col-md-6 form-group mb-3"> -->
+<!--                                                 <label for="SubCategory">Product Status</label>  -->
+<!--                                                 <select class="form-control form-control-rounded" name="productStatus" id="productStatus" required> -->
+<!--                                                  <option value="" >Product Status</option> -->
+<!--                                                 <option value="Pending">Pending</option> -->
+<!--                                                  <option value="Confirm">Confirm</option> -->
+<!--                                                 </select> -->
+<!--                                             </div> -->
+                                            
+                                           
+                                            
+                                           
+                                            
+                                            
+                                            <div class="col-md-12 modal-footer mt-3">
+                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                                                <input class="btn btn-primary ml-2 submit" type="submit" value="Save">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade " id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit Product</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="update">
+                                        <div class="row">
+                                                
+                                                
+                                                <input class="form-control form-control-rounded" name="id" id="id1" type="hidden"  required />
+                                          
+                                         
+                                                 
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Product Name</label>
+                                                <input class="form-control form-control-rounded" id="productName" name="productName"  type="text"  title="only alphabets and spaces allowed" required />
+                                            </div>
+                                             <!--  <div class="col-md-6 form-group mb-3">
+                                                <label for="SubCategory">Product type</label> 
+                                                <select class="form-control form-control-rounded" name="productType" id="productType1"  required >
+                                                 <option value="">Product Type</option>
+                                                <option value="Regular / Subscription">Regular/Subscription</option>
+                                                 <option value="Bulk">Bulk</option>
+                                                </select>
+                                            </div> -->
+                                            
+                                            
+                                              
+                                             
+                                              <div class="col-md-6 form-group mb-3">
+                                                <label for="subGroupTitle">Product Image1</label>
+                                                <input class="form-control form-control-rounded" name="productImage1"  type="file" accept=".png, .jpg" />
+                                              </div>
+                                             
+                                              <div class="col-md-6 form-group mb-3">
+                                                <label for="subGroupTitle">Product Image2</label>
+                                                <input class="form-control form-control-rounded" name="productImage2" type="file" accept=".png, .jpg" />
+                                              </div>
+                                              
+                                               <div class="col-md-6 form-group mb-3">
+                                                <label for="subGroupTitle"> Product Image3</label>
+                                                <input class="form-control form-control-rounded" name="productImage3"  type="file" accept=".png, .jpg" />
+                                              </div>
+                                             
+                                             
+                                             
+                                          
+                                             
+                                             
+                                              <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Product Net Price</label>
+                                                <input class="form-control form-control-rounded" name="productNetPrice" id="productNetPrice1" type="number" step=".01" pattern="[0-9]+"   />
+                                            </div>
+                                              <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Product Selling Price</label>
+                                                <input class="form-control form-control-rounded" name="productSellingPrice" id="productSellingPrice1" type="number" step=".01" pattern="[0-9]+"  />
+                                            </div>
+                                             <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Discount Amount</label>
+                                                <input class="form-control form-control-rounded" readonly="readonly" name="discountAmount" id="discountAmount1" type="number" step=".01" pattern="[0-9]+"   />
+                                            </div>
+                                            
+                                            <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Discount Percentage</label>
+                                                <input class="form-control form-control-rounded" readonly="readonly" name="discountPercentage" id="discountPercetange1" type="number" step=".01" pattern="[0-9]+"   />
+                                            </div>
+                                          
+                                              
+                                             <div class="col-md-6 form-group mb-3">
+                                                <label for="subCategory">Available Quantity</label>
+                                                <input class="form-control form-control-rounded" name="availableQuantity" id="availableQuantity1" type="number" step=".01" pattern="[0-9]+"   />
+                                            </div>
+                                            
+                                            
+                                             <div class="col-md-6 form-group mb-3">
+												<label for="SubCategory">Product Type</label> <select
+													class="form-control form-control-rounded"
+													name="productType" id="productType">
+													<option value="">Product Type</option>
+													<option value="New Arrivals">New Arrivals</option>
+													<option value="Featured Products">Featured
+														Products</option>
+													<option value="Today's Deal">Today's Deal</option>
+												</select>
+											</div>
+                                            
+                                            <div class="col-md-12 form-group mb-3">
+                                                <label for="subCategory">Product Description </label>
+                                                <textarea class="form-control form-control-rounded" name="productDesc" id="productDesc1" cols="4" rows="4"    ></textarea>
+                                            </div>
+<!--                                             <div class="col-md-6 form-group mb-3"> -->
+<!--                                                 <label for="SubCategory">Product Status</label>  -->
+<!--                                                 <select class="form-control form-control-rounded" name="productStatus" id="productStatus1" required> -->
+<!--                                                  <option value="">Product Status</option> -->
+<!--                                                 <option value="Pending">Pending</option> -->
+<!--                                                  <option value="Confirm">Confirm</option> -->
+<!--                                                 </select> -->
+<!--                                             </div> -->
+                                            
+                                           
+                                            
+                                            
+                                      
+                                            <div class="col-md-12 modal-footer mt-3">
+                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                                                <input class="btn btn-primary ml-2 submit" type="submit" value="Save">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="admin/common/layout :: admin-footer-link"></div>
+    <script type="text/javascript">
+    $('document').ready(function() {
+     
+    	showAllProductList();
+    	//showMainGroupList();
+    	//showMainGroup();
+    	
+    	
+    	
+    	
+
+    });
+ 
+    $('#productSellingPrice').on("keyup",function(){
+    	 var porodutSellingPrice=$('#productSellingPrice').val();
+     	var productNetPrice=$('#productNetPrice').val();
+    	if(productNetPrice)
+    		{
+//      		if(porodutSellingPrice > productNetPrice)
+//     			{
+//     			alert("Invalid Selling Price");
+    		
+//     			}
+//      		else
+//     			{
+    			var discountAmount= (productNetPrice - porodutSellingPrice);
+    	    	$("#discountAmount").val(discountAmount.toFixed(2));
+    			
+    			
+    			 var discountPercentage  = ((discountAmount / productNetPrice ) * 100).toFixed(2);
+    		    	$("#discountPercentage").val(discountPercentage);
+    		}
+	   
+    	  	
+//         if(porodutSellingPrice){}
+       
+//         else {  	
+//         	alert("Add  Selling Price");	
+//         }
+    	
+ });
+    
+    
+    $('#productNetPrice').on("keyup",function(){
+    	
+		 
+	    var porodutSellingPrice=$('#productSellingPrice').val();
+    	var productNetPrice=$('#productNetPrice').val();
+    	if(porodutSellingPrice)
+    		{
+    		var discountAmount= productNetPrice - porodutSellingPrice;
+	    	$("#discountAmount").val(discountAmount.toFixed(2));
+    		}
+    	  	
+		   	 var discountPercentage  = ((discountAmount / productNetPrice ) * 100).toFixed(2);
+		 	$("#discountPercentage").val(discountPercentage);
+//         if(productNetPrice){}
+       
+//         else {  	
+//         	alert("Add  Net Price");
+//         }
+    	
+ });
+    
+    $('#productSellingPrice1').on("keyup",function(){
+   	 var porodutSellingPrice=$('#productSellingPrice1').val();
+    	var productNetPrice=$('#productNetPrice1').val();
+   	if(productNetPrice)
+   		{
+   		var discountAmount= (productNetPrice - porodutSellingPrice).toFixed(2);
+	    	$("#discountAmount1").val(discountAmount);
+	    
+	    var discountPercentage  = ((discountAmount / productNetPrice ) * 100);
+	    	$("#discountPercetange1").val(discountPercentage.toFixed(2));
+   		}
+	   
+  
+});
+   
+   
+   $('#productNetPrice1').on("keyup",function(){
+   	
+		 
+	    var porodutSellingPrice=$('#productSellingPrice1').val();
+   	var productNetPrice=$('#productNetPrice1').val();
+   	if(porodutSellingPrice)
+   		{
+   		var discountAmount= (productNetPrice - porodutSellingPrice).toFixed(2);
+	    	$("#discountAmount1").val(discountAmount);
+	    	
+	    	var discountPercentage  = ((discountAmount / productNetPrice ) * 100);
+	  	   
+		    	$("#discountPercetange1").val(discountPercentage.toFixed(2))
+   		}
+   	  	
+
+   	
+});
+
+   
+    function showAllProductList() {
+        $('#datatable-buttons').DataTable().destroy();
+        $.ajax({
+            type: "ajax",
+            dataType: 'json',
+            url: "/get-product-list",
+            method: 'GET',
+            async: false,
+            dataType: 'json',
+            success: function(data) {
+            	var arr = ["Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
+                var activityStatus = '';
+                var productImage1 = '';
+                var productImage2 = '';
+                var productImage3 = '';
+                var html = '';
+                var i;
+                for (i = 0; i < data.length; i++) {
+	
+		     console.log(data);
+
+                	var date = new Date(data[i].updatedDate);
+					var from_dd = date.getDate();
+					var from_mm = date.getMonth() + 1;
+					var from_yyyy = date.getFullYear();
+					var from = from_yyyy + '-' + from_mm + '-'
+							+ from_dd;
+					var from_hours = date.getHours() > 12 ? date
+							.getHours() - 12 : date.getHours();
+					var from_am_pm = date.getHours() >= 12 ? "PM"
+							: "AM";
+					hours = from_hours < 10 ? "0" + from_hours
+							: from_hours;
+					var from_minutes = date.getMinutes() < 10 ? "0"
+							+ date.getMinutes() : date.getMinutes();
+					var from_seconds = date.getSeconds() < 10 ? "0"
+							+ date.getSeconds() : date.getSeconds();
+							updatedDate = from_dd + '-' + from_mm + '-'
+							+ from_yyyy + ' ' + from_hours + ":"
+							+ from_minutes + " " + from_am_pm;
+							
+					if(data[i].productImage1)
+			        {
+			          	var productImage1 =  '<td>'+'<a  href="/uploads/product/'+data[i].productImage1+'" target="_blank">view</a>'+'</td>';
+			        }
+			        else
+			        {
+			          	var productImage1='<td>'+'</td>';
+			        }
+					
+					if(data[i].productImage2)
+			        {
+			          	var productImage2 =  '<td>'+'<a  href="/uploads/product/'+data[i].productImage2+'" target="_blank">view</a>'+'</td>';
+			        }
+			        else
+			        {
+			          	var productImage2='<td>'+'</td>';
+			        }
+					
+					if(data[i].productImage3)
+			        {
+			          	var productImage3 =  '<td>'+'<a  href="/uploads/product/'+data[i].productImage3+'" target="_blank">view</a>'+'</td>';
+			        }
+			        else
+			        {
+			          	var productImage3='<td>'+'</td>';
+			        }
+					
+					
+					
+                    html += ' <tr>' +
+//                     		'<td>'+data[i].id+'</td>'+
+                        '<td>' +
+                        '<a class="text-success mr-2 edit" data="' + data[i].id + '" href="javascript:;"><i class="dripicons-document-edit"></i></a>' +
+                       /*  ' <a class="text-danger mr-2 delete" data="' + data[i].id + '" href="javascript:;"><i class="dripicons-document-delete"></i></a>' + */
+                        '</td>' +
+                    
+                        '<td>' + data[i].productName + '</td>' +                       
+                        productImage1+
+                        productImage2+
+                        productImage3+
+                        
+                      
+                         '<td>' + data[i].productNetPrice + '</td>' +
+                        '<td>' + data[i].productSellingPrice + '</td>' +
+                        '<td>' + data[i].discountAmount + '</td>' +
+                        '<td>' + data[i].discountPercentage + '</td>' +
+                     
+                        '<td>' + data[i].availableQuantity + '</td>' +
+                         '<td>' + data[i].productDesc + '</td>' 
+                       
+                    
+                        ' </tr>';
+                }
+                $('#showData').html(html);
+                $('#datatable-buttons').DataTable({
+                    destroy: true,
+                    lengthChange: false,
+                    order: [0, "desc"],
+                    "iDisplayLength": 100,
+                    buttons: ['copy', 'excel', 'colvis']
+                }).buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+            },
+            error: function() {
+                alert('could not get data from database');
+            }
+        });
+    }
+    
+    
+    $(document).on('submit', '#insert', function(e) {
+        e.preventDefault();
+       
+        $.ajax({
+            type: "ajax",
+            method: "POST",
+            url: "/save-product",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            cache: false,
+            beforeSend: function() {
+                 $(".submit").prop('disabled', true); 
+            },
+
+            success: function(data) {
+                $(".submit").prop('disabled', false);
+                $('#insert')[0].reset();
+                $('#addModal').modal('hide');
+               
+                showAllProductList();
+            },
+            error: function() {
+                alert('could not insert');
+            }
+        });
+    });
+    
+    
+    
+    $('#showData').on('click', '.edit', function() {
+        var id = $(this).attr('data');
+        $('#editModal').modal('show');
+     
+        $.ajax({
+            type: 'ajax',
+            method: 'GET',
+            url: "/get-product",
+            data: { Id: id },
+            async: false,
+            dataType: 'json',
+            success: function(data) {
+                
+                $("#id1").val(data.id);
+               
+     
+                 $('input[id=productName]').val(data.productName);
+              
+               
+                
+               // $("#productType1").val(data.productType);
+                
+                
+                
+              
+                $("#productNetPrice1").val(data.productNetPrice);
+                $("#productSellingPrice1").val(data.productSellingPrice);
+                
+                $("#discountAmount1").val(data.discountAmount);
+                $("#discountPercetange1").val(data.discountPercentage);
+                
+                //$("#productPricePerGramOrMl1").val(data.productPricePerGramOrMl);
+            
+                
+                $("#availableQuantity1").val(data.availableQuantity);
+                //$("#availableQuantityInKgOrLtr1").val(data.availableQuantityInKgOrLtr);
+                //$("#minQuantityInKgOrLtr1").val(data.minQuantityInKgOrLtr);
+                
+                $("#productType").val(data.productType);
+                
+                $("#marginPerProduct1").val(data.marginPerProduct);
+                $("#productDesc1").val(data.productDesc);
+              
+               
+
+            },
+            error: function() {
+                alert('Could not Edit Data');
+            }
+        });
+    });
+
+
+    $(document).on('submit', '#update', function(e) {
+
+        e.preventDefault();
+
+        $.ajax({
+            url: "/update-product",
+            method: 'POST',
+            data: new FormData(this),
+            contentType: false,
+            processData: false,
+            cache: false,
+            beforeSend: function() {
+
+                $(".submit").prop('disabled', true);
+            },
+
+            success: function(data) {
+                $(".submit").prop('disabled', false);
+                $('#update')[0].reset();
+                $('#editModal').modal('hide');
+
+
+                showAllProductList();
+
+
+            },
+            error: function() {
+                /*alert('could not insert');*/
+           }
+        });
+
+    });
+
+    
+    $(document).on('click', '.delete', function() {
+        var Id = $(this).attr('data');
+        if (confirm('Are you want to delete this?'))
+            $.ajax({
+                method: "POST",
+                url: "/delete-product",
+                data: { Id: Id },
+                success: function(data) {
+                	 showAllProductList();
+                },
+                error: function() {
+                    alert('could not delete');
+                }
+            });
+    });
+ 
+		var _URL = window.URL || window.webkitURL;
+
+		$(document).on('change', '#productImage1', function() {
+			var file, img;
+		if ((file = this.files[0])) {
+				img = new Image();
+				img.onload = function() {
+					var width = this.width;
+					var height = this.height;
+					if (width != 700 && height != 700) {
+
+						$("#productImage1").val('');
+						$("#productImage1").prop('src', '');
+						alert('Height and Width must be 700 by 700 Px.')
+					}
+				};
+		
+				img.src = _URL.createObjectURL(file);
+			}
+		}); 
+		$(document).on('change', '#productImage2', function() {
+			var file, img;
+		if ((file = this.files[0])) {
+				img = new Image();
+				img.onload = function() {
+					var width = this.width;
+					var height = this.height;
+					if (width != 700 && height != 700) {
+
+						$("#productImage2").val('');
+						$("#productImage2").prop('src', '');
+						alert('Height and Width must be 700 by 700 Px.')
+					}
+				};
+				
+				img.src = _URL.createObjectURL(file);
+			}
+		}); 
+		$(document).on('change', '#productImage3', function() {
+			var file, img;
+		if ((file = this.files[0])) {
+				img = new Image();
+				img.onload = function() {
+					var width = this.width;
+					var height = this.height;
+					if (width != 700 && height != 700) {
+
+						$("#productImage3").val('');
+						$("#productImage3").prop('src', '');
+						alert('Height and Width must be 700 by 700 Px.')
+					}
+				};
+				
+				img.src = _URL.createObjectURL(file);
+			}
+		}); 
+      </script>
+</body>
+
+</html>

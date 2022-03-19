@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head th:replace="admin/common/layout :: admin-header-link">
+</head>
+
+<body>
+	<!-- Begin page -->
+	<div id="wrapper">
+		<!-- Top Bar Start -->
+		<div class="topbar"
+			th:replace="admin/common/layout :: admin-navbar"></div>
+		<!-- Top Bar End -->
+		<!-- ========== Left Sidebar Start ========== -->
+		<div class="left side-menu"
+			th:replace="admin/common/layout :: admin-sidebar"></div>
+		<!-- Left Sidebar End -->
+		<!-- ============================================================== -->
+		<!-- Start right Content here -->
+		<!-- ============================================================== -->
+		<div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="page-title-box">
+								<h4 class="page-title">Other</h4>
+							</div>
+						</div>
+					</div>
+					<!-- end row -->
+					<div class="row">
+						
+
+						<div class="col-xl-3 col-md-6">
+							<div class="card mini-stat bg-primary">
+								<a href="/admin/manage-banner" class="ml-height">
+									<div class="card-body mini-stat-img">
+										<div class="mini-stat-icon">
+											<i class="typcn typcn-th-large float-right"></i>
+										</div>
+										<div class="text-white">
+											<h6 class="text-uppercase mb-3">Manage Banner</h6>
+										</div>
+									</div>
+								</a>
+							</div>
+							<!-- test -->
+						</div>
+						<div class="col-xl-3 col-md-6">
+							<div class="card mini-stat bg-primary">
+								<a href="/admin/manage-main-transaction" class="ml-height">
+									<div class="card-body mini-stat-img">
+										<div class="mini-stat-icon">
+											<i class="typcn typcn-th-large float-right"></i>
+										</div>
+										<div class="text-white">
+											<h6 class="text-uppercase mb-3">Transaction</h6>
+										</div>
+									</div>
+								</a>
+							</div>
+							<!-- test -->
+						</div>
+						<!--<div class="col-xl-3 col-md-6">
+							<div class="card mini-stat bg-primary">
+								<a href="/admin/manage-contact" class="ml-height">
+									<div class="card-body mini-stat-img">
+										<div class="mini-stat-icon">
+											<i class="fas fa-map  float-right"></i>
+										</div>
+										<div class="text-white">
+											<h6 class="text-uppercase mb-3">Website Enquiry</h6>
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>-->
+						
+						
+<!-- 						<div class="col-xl-3 col-md-6"> -->
+<!-- 							<div class="card mini-stat bg-primary"> -->
+<!-- 								<a href="/admin/manage-order-sale-between-date" -->
+<!-- 									class="ml-height"> -->
+<!-- 									<div class="card-body mini-stat-img"> -->
+<!-- 										<div class="mini-stat-icon"> -->
+<!-- 											<i class="fas fa-map  float-right"></i> -->
+<!-- 										</div> -->
+<!-- 										<div class="text-white"> -->
+<!-- 											<h6 class="text-uppercase mb-3">Manage Sale Order -->
+<!-- 												Between Date</h6> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-xl-3 col-md-6"> -->
+<!-- 							<div class="card mini-stat bg-primary"> -->
+<!-- 								<a href="/admin/manage-cancel-order" class="ml-height"> -->
+<!-- 									<div class="card-body mini-stat-img"> -->
+<!-- 										<div class="mini-stat-icon"> -->
+<!-- 											<i class="fas fa-map  float-right"></i> -->
+<!-- 										</div> -->
+<!-- 										<div class="text-white"> -->
+<!-- 											<h6 class="text-uppercase mb-3">Manage Cancel Order</h6> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+
+<!-- 						<div class="col-xl-3 col-md-6"> -->
+<!-- 							<div class="card mini-stat bg-primary"> -->
+<!-- 								<a href="/admin/manage-order-by-cod-between-date" -->
+<!-- 									class="ml-height"> -->
+<!-- 									<div class="card-body mini-stat-img"> -->
+<!-- 										<div class="mini-stat-icon"> -->
+<!-- 											<i class="fas fa-map  float-right"></i> -->
+<!-- 										</div> -->
+<!-- 										<div class="text-white"> -->
+<!-- 											<h6 class="text-uppercase mb-3">Manage COD Order </h6> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+
+<!-- 						<div class="col-xl-3 col-md-6"> -->
+<!-- 							<div class="card mini-stat bg-primary"> -->
+<!-- 								<a href="/admin/manage-order-sale-by-vendor" class="ml-height"> -->
+<!-- 									<div class="card-body mini-stat-img"> -->
+<!-- 										<div class="mini-stat-icon"> -->
+<!-- 											<i class="fas fa-map  float-right"></i> -->
+<!-- 										</div> -->
+<!-- 										<div class="text-white"> -->
+<!-- 											<h6 class="text-uppercase mb-3">Manage Vendor Order Sale</h6> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-xl-3 col-md-6"> -->
+<!-- 							<div class="card mini-stat bg-primary"> -->
+<!-- 								<a href="/admin/manage-refund-order-list" class="ml-height"> -->
+<!-- 									<div class="card-body mini-stat-img"> -->
+<!-- 										<div class="mini-stat-icon"> -->
+<!-- 											<i class="fas fa-map  float-right"></i> -->
+<!-- 										</div> -->
+<!-- 										<div class="text-white"> -->
+<!-- 											<h6 class="text-uppercase mb-3">Refund Order</h6> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+						
+<!-- 						<div class="col-xl-3 col-md-6"> -->
+<!-- 							<div class="card mini-stat bg-primary"> -->
+<!-- 								<a href="/admin/manage-vendor-wise-and-product-wise-sale-report" class="ml-height"> -->
+<!-- 									<div class="card-body mini-stat-img"> -->
+<!-- 										<div class="mini-stat-icon"> -->
+<!-- 											<i class="fas fa-map  float-right"></i> -->
+<!-- 										</div> -->
+<!-- 										<div class="text-white"> -->
+<!-- 											<h6 class="text-uppercase mb-3">Vendor Productwise Sale</h6> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-xl-3 col-md-6"> -->
+<!-- 							<div class="card mini-stat bg-primary"> -->
+<!-- 								<a href="/admin/manage-margin-report" class="ml-height"> -->
+<!-- 									<div class="card-body mini-stat-img"> -->
+<!-- 										<div class="mini-stat-icon"> -->
+<!-- 											<i class="fas fa-map  float-right"></i> -->
+<!-- 										</div> -->
+<!-- 										<div class="text-white"> -->
+<!-- 											<h6 class="text-uppercase mb-3">Order Margin</h6> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+						
+						
+						<!-- <div class="col-xl-3 col-md-6">
+                            <div class="card mini-stat bg-primary">
+                                <a href="/admin/manage-main-category" class="ml-height">
+                                    <div class="card-body mini-stat-img">
+                                        <div class="mini-stat-icon">
+                                            <i class="fas fa-map  float-right"></i>
+                                        </div>
+                                        <div class="text-white">
+                                            <h6 class="text-uppercase mb-3">Manage Category</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                   -->
+
+
+						<!--  <div class="col-xl-3 col-md-6">
+                            <div class="card mini-stat bg-primary">	
+                                <div class="card-body mini-stat-img">
+                                    <div class="mini-stat-icon">
+                                        <i class="mdi mdi-briefcase-check float-right"></i>
+                                    </div>
+                                    <div class="text-white">
+                                        <h6 class="text-uppercase mb-3">Product Sold</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+					</div>
+					<!-- end row -->
+				</div>
+				<!-- container-fluid -->
+			</div>
+			<!-- content -->
+		</div>
+		<!-- ============================================================== -->
+		<!-- End Right content here -->
+		<!-- ============================================================== -->
+	</div>
+	<!-- END wrapper -->
+	<!-- jQuery  -->
+	<div th:replace="admin/common/layout :: admin-footer-link"></div>
+</body>
+
+</html>

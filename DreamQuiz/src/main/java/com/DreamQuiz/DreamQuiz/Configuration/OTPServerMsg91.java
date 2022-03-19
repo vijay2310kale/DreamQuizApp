@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Random;
 
 public class OTPServerMsg91 {
 	
@@ -153,6 +154,31 @@ public class OTPServerMsg91 {
 //		OTPServerMsg91 obj=new OTPServerMsg91();
 //		obj.sendMessage("8983267336", "hello");
 //	}
-
+	public String generatePassword() {
+		String Capital_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String Small_chars = "abcdefghijklmnopqrstuvwxyz";
+		String numbers = "0123456789";
+		String symbols = "!@#$%^&*_=+-/.?<>)";
+		String values = Capital_chars + Small_chars + numbers + symbols;
+		Random rndm_method = new Random();
+		char[] password = new char[10];
+		for (int i = 0; i < 10; i++) {
+			password[i] = values.charAt(rndm_method.nextInt(values.length()));
+		}
+		String generatedPassword = new String(password);
+		return generatedPassword;
+	}
+	
+	public Long generateSixDigitloginid() {
+		String values = "0123456789";
+		Random rndm_method = new Random();
+		char[] obj = new char[9];
+		for (int i = 0; i < 9; i++) {
+			obj[i] = values.charAt(rndm_method.nextInt(values.length()));
+		}
+		String data = new String(obj);
+		long loginid = Long.parseLong(data);
+		return loginid;
+	}
 
 }

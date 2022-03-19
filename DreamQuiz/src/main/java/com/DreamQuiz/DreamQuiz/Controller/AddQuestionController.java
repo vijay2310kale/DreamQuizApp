@@ -1,8 +1,6 @@
 package com.DreamQuiz.DreamQuiz.Controller;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,7 +9,6 @@ import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,11 +26,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.DreamQuiz.DreamQuiz.AndroidRespopnce.NewRegiRepo;
 import com.DreamQuiz.DreamQuiz.Configuration.FileUploadHelper;
+import com.DreamQuiz.DreamQuiz.Configuration.OTPServerMsg91;
 import com.DreamQuiz.DreamQuiz.entity.AppJsopnResponse;
 import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
 //import com.DreamQuiz.DreamQuiz.entity.Doc;
 import com.DreamQuiz.DreamQuiz.entity.Examdetails;
+import com.DreamQuiz.DreamQuiz.entity.NewRegister;
 //import com.DreamQuiz.DreamQuiz.entity.FileDB;
 import com.DreamQuiz.DreamQuiz.entity.OldPaper;
 import com.DreamQuiz.DreamQuiz.entity.Queations;
@@ -1006,6 +1006,40 @@ public class AddQuestionController {
 
 	
 
+      
+      
+
+  	@RequestMapping(value = "/addnewregister", method = RequestMethod.POST)
+
+  	public NewRegiRepo addnewregister(NewRegister newRegister) {
+  		
+  		NewRegiRepo resp = new NewRegiRepo();
+  		
+  		
+  		OTPServerMsg91 obj=new OTPServerMsg91();
+  		Long genloginid=obj.generateSixDigitloginid();
+  		String loginconvid=genloginid.toString();
+  		System.out.println("loginconvid  :  "+loginconvid);
+  		String pass =obj.generatePassword();
+  		System.out.println("pass      :  "+pass);
+  		
+  		newRegister.setLoginid(loginconvid);
+  		newRegister.setPassword(pass);
+  		
+  		addQuestionService.savenewregi(newRegister);
+  		
+  		
+  		
+  		
+  		
+  		resp.setMessage(" succss   ");
+  		resp.setStatus("True");
+  		resp.setPassword(pass);
+  		resp.setLoginid(loginconvid);
+  		
+  			return resp;
+  			
+  		}
    
       
 }

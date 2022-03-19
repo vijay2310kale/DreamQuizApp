@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head th:replace="admin/common/layout :: admin-header-link"></head>
+<body onload="onloadfun();">
+
+ <div id="wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar" th:replace="admin/common/layout :: admin-navbar"></div>
+        <!-- Top Bar End -->
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="left side-menu" th:replace="admin/common/layout :: admin-sidebar"></div>
+        <!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+            <!-- test -->
+                <div class="container-fluid">
+                    <div class="row">
+                    
+                        <div class="col-sm-12">
+                            <div class="page-title-box">
+                                <div class="card m-b-20">
+                                    <div class="card-body">
+                                        <div class="row ">
+                                        <div class="col-md-12 m-b-15">
+												<h4 class="mt-0 header-title">
+													  All Client List
+												<div class="col-md-4 m-b-15">	  
+													  
+													<!--<button class="btn btn-primary btn-md m-1" type="button"
+														data-toggle="modal" data-target="#addModal"
+														style="float: right;">Subject Table </button>-->
+												</h4>
+												</div>
+<!-- 												
+<!--                                             	</div> -->
+												
+											</div>
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+                                    <div class="modal fade " id="editModal" tabindex="-1" role="dialog"
+						aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						<div
+							class="modal-dialog modal-md modal-dialog-centered modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalCenterTitle">Update
+										User Details</h5>
+									<button class="close" type="button" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form id="update">
+										<div class="row">
+
+											<input class="form-control form-control-rounded" name=uid
+												id="uid" type="hidden" placeholder="user id"
+												title="only alphabets and spaces allowed" required />
+                                            <div class="col-md-6 form-group mb-3">
+												<label for="firstName2">MjoinigName1</label> <input
+													class="form-control form-control-rounded" name="mjoinigname1"
+													id="mjoinigname1">
+													
+											</div>
+											
+											<div class="col-md-6 form-group mb-3">
+												<label for="firstName2">MjoinigName2</label> <input
+													class="form-control form-control-rounded" name="mjoinigname2"
+													id="mjoinigname2">
+													
+											</div>
+
+											<div class="col-md-6 form-group mb-3">
+												<label for="firstName2">MjoinigName3</label> <input
+													class="form-control form-control-rounded" name="mjoinigname3"
+													id="mjoinigname3" required>
+													
+											</div>
+											
+											<div class="col-md-6 form-group mb-3">
+												<label for="firstName2">Password</label> <input
+													class="form-control form-control-rounded" name="password"
+													id="password" required>
+													
+											</div>
+											<div class="col-md-6 form-group mb-3">
+												<label for="firstName2">Status</label> <input
+													class="form-control form-control-rounded" name="status"
+													id="status" required>
+													
+											</div>
+
+											<div class="col-md-12 modal-footer mt-3">
+												<button class="btn btn-secondary" type="button"
+													data-dismiss="modal">Close</button>
+												<input class="btn btn-primary ml-2 submit" type="submit"
+													value="Update Meeting">
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>  
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                     <div class="col-md-3 form-group mb-3"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  Add New client
+</button>
+</div> 
+<div class="collapse  col-md-6 form-group mb-6" id="collapseExample">
+   <form id="insert">
+   
+   
+   
+                                        <input class="form-control form-control-rounded" name="deviceid"
+												id="deviceid" value="0" type="hidden" placeholder="deviceid"
+												title="only alphabets and spaces allowed" required />
+                                        <div class="row">
+                                          
+                                           <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">First Name</label>
+                                            <input class="form-control form-control-rounded" name="fname"  type="text"  title="only alphabets and spaces allowed" required />
+                                        </div>
+                                        
+                                         <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">Password</label>
+                                            <input class="form-control form-control-rounded" name="password"  type="text"  title="only alphabets and spaces allowed" required />
+                                        </div>
+                                        
+                                        </div>
+                                         
+                                         <div class="row">
+                                        
+                                        <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">MJoinigName1</label>
+                                            <input class="form-control form-control-rounded" name="mjoinigname1"  type="text"  title="only alphabets and spaces allowed" required />
+                                        </div>
+                                        
+                                      
+                                         <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">MJoinigName2</label>
+                                            <input class="form-control form-control-rounded" name="mjoinigname2"  type="text"  title="only alphabets and spaces allowed" required />
+                                        </div>
+                                        
+                                        </div>
+                                         <div class="row">
+                                         <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">MJoinigName3</label>
+                                            <input class="form-control form-control-rounded" name="mjoinigname3"  type="text"  title="only alphabets and spaces allowed" required />
+                                        </div>
+                                        
+                                        </div>
+                                         <div class="row">
+                                        <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">Phone No</label>
+                                            
+                                          <input class="form-control form-control-rounded" name="phone_no"  type="text"  title="only alphabets and spaces allowed" required />
+
+                                       
+                                        </div>
+                                         
+                                        <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">Email</label>
+                                            <input class="form-control form-control-rounded" name="email"  type="text"  title="only alphabets and spaces allowed" required />
+
+                                        </div>
+                                         </div>
+                                        
+                                        <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">Status</label>
+                                            <input class="form-control form-control-rounded" name="status"  type="text"  title="only alphabets and spaces allowed" required />
+
+                                        </div>
+                                         </div>
+                                       
+                                          <div class="col-md-6 modal-footer mt-3">
+                                               <!-- <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>-->
+                                                <input class="btn btn-primary ml-2 submit" type="submit" value="Save">
+                                            </div>
+                                    </form>
+</div>
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-12 table-responsive">
+                                               
+                                             <table class=" table table-striped dt-responsive nowrap" id="datatable-buttons" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+<!--                                                          <th>Id</th> -->
+                                                        <th>Id</th>
+                                                        
+                                                           <th> FirstName</th>    
+                                                         <th>MJoinigName1</th> 
+                                                         <th>MJoinigName2</th> 
+                                                         <th>MJoinigName3</th> 
+                                                         <th> LoginId</th> 
+                                                        <th> Password</th>
+                                                         <th> Phone_No</th> 
+                                                      <th> EmailId</th> 
+                                                      <th> Status</th>
+                                                    <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="showData">
+                                                    
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                        </div>
+                    </div>
+                  
+                   
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+   
+      <div th:replace="admin/common/layout :: admin-footer-link"></div>
+      
+      
+    <script type="text/javascript">
+    
+      $(document).on('submit', '#insert', function(e) {
+        e.preventDefault();
+       
+        $.ajax({
+            type: "ajax",
+            method: "POST",
+            url: "/Addnewregister",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            cache: false,
+            beforeSend: function() {
+                 $(".submit").prop('disabled', true); 
+            },
+
+            success: function(data) {
+                $(".submit").prop('disabled', false);
+                $('#insert')[0].reset();
+                $('#addModal').modal('hide');
+               
+               showAllQueationList();
+               location.reload();
+            },
+            error: function() {
+                alert('could not insert');
+            }
+        });
+    });
+    
+    
+    
+    function showAllQueationList() {
+	//alert('just test')
+        $('#datatable-buttons').DataTable().destroy();
+        $.ajax({
+            type: "ajax",
+            dataType: 'json',
+            url: "/Adminfindallclient",
+            method: 'GET',
+            async: false,
+            dataType: 'json',
+            success: function(data) {
+           
+                var html = '';
+                var i;
+                for (i = 0; i < data.length; i++) {
+	
+		                  console.log(data);		
+					
+                    html += '<tr>' +'<td>'+data[i].uid+'</td>'+
+                         '<td>' + data[i].fname + '</td>' +
+                          '<td>' + data[i].mjoinigname1 + '</td>' +
+                          '<td>' + data[i].mjoinigname2 + '</td>' +
+                          '<td>' + data[i].mjoinigname3 + '</td>' +
+                           '<td>' + data[i].loginid + '</td>' +
+                            '<td>' + data[i].password + '</td>' +
+                             '<td>' + data[i].phone_no + '</td>' +
+                             '<td>' + data[i].email + '</td>' +
+                              '<td>' + data[i].status + '</td>' +
+                             '<td>' + '<a class="text-success mr-2 edit" data="' + data[i].uid + '" href="javascript:;"><i class="dripicons-document-edit"></i></a>'+'</td>' +
+                         '</tr>';
+                         
+                         
+                        
+                }
+                $('#showData').html(html);
+                $('#datatable-buttons').DataTable({
+                    destroy: true,
+                    lengthChange: false,
+                    order: [0, "desc"],
+                    "iDisplayLength": 100,
+                    buttons: ['copy', 'excel', 'colvis']
+                }).buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+            },
+            error: function() {
+                alert('could not get data from database');
+            }
+        });
+        
+        
+         $('#showData').on('click', '.edit', function() {
+			var id = $(this).attr('data');
+			$('#editModal').modal('show');
+
+			$.ajax({
+				type : 'ajax',
+				method : 'GET',
+				url : "/getclientbyid",
+				data : {
+					uid : id
+				},
+				async : false,
+				dataType : 'json',
+				success : function(data) {
+					//alert(data.mid);
+
+					$("#uid").val(data.uid);
+					$("#password").val(data.password);
+					$("#mjoinigname1").val(data.mjoinigname1);
+					$("#mjoinigname2").val(data.mjoinigname2);
+					$("#mjoinigname3").val(data.mjoinigname3);
+					$("#status").val(data.status);
+
+				},
+				error : function() {
+					alert('Could not Edit Data');
+				}
+			});
+		});
+		
+		
+		
+		$(document).on('submit', '#update', function(e) {
+
+			e.preventDefault();
+
+			$.ajax({
+				url : "/UpdateUserDetails",
+				method : 'POST',
+				data : new FormData(this),
+				contentType : false,
+				processData : false,
+				cache : false,
+				beforeSend : function() {
+
+					$(".submit").prop('disabled', true);
+				},
+
+				success : function(data) {
+					$(".submit").prop('disabled', false);
+					$('#update')[0].reset();
+					$('#editModal').modal('hide');
+
+					//showStockList();
+					showAllQueationList();
+					//alert('User Updated');
+
+				},
+				error : function() {
+					/*alert('could not insert');*/
+				}
+			});
+
+		});
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+   
+     </script>
+     <script>
+     function onloadfun(){
+     showAllQueationList();
+     
+     }</script>
+</body>
+</html>

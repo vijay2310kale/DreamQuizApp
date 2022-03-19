@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head th:replace="admin/common/layout :: admin-header-link"></head>
+
+<body>
+	<!-- Begin page -->
+	<div id="wrapper">
+		<!-- Top Bar Start -->
+		<div class="topbar"
+			th:replace="admin/common/layout :: admin-navbar"></div>
+		<!-- Top Bar End -->
+		<!-- ========== Left Sidebar Start ========== -->
+		<div class="left side-menu"
+			th:replace="admin/common/layout :: admin-sidebar"></div>
+		<!-- Left Sidebar End -->
+		<!-- ============================================================== -->
+		<!-- Start right Content here -->
+		<!-- ============================================================== -->
+		<div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<!-- test -->
+				<div class="container-fluid">
+					<div class="row">
+
+						<div class="col-sm-12">
+							<div class="page-title-box">
+								<div class="card m-b-20">
+									<div class="card-body">
+										<div class="row ">
+											<div class="col-md-12 m-b-15">
+												<h4 class="mt-0 header-title">
+												Product Sale Report
+													
+												</h4>
+											</div>
+											
+											<div id="search_section" class="col-md-12 m-b-15 row">
+
+
+													
+
+													<div class="col-md-2">
+														<label>Order Status</label>
+														 <select class="form-control form-control-rounded" name="orderStatus" id="orderStatus"  onchange="showSaleReportList();">
+												      <option value="All">All</option> 
+														<option value="Active">Active</option>
+														<option value="Complete">Complete</option> 
+														
+														 </select>
+													</div>
+
+
+<!-- 													<div class="col-md-2"> -->
+<!-- 													<label>Select Period</label> <select onchange="showSaleReportList();" -->
+<!-- 														class="form-control form-control-rounded" -->
+<!-- 														id="selectPeriod"> -->
+<!-- 														<option>Select Period</option> -->
+<!-- 														<option value="Daily">Daily</option> -->
+<!-- 														<option value="Weekly">Weekly</option> -->
+<!-- 														<option value="Monthly">Monthly</option> -->
+<!-- 													</select> -->
+<!-- 												</div> -->
+												
+												<div class="col-md-2">
+													<label>Select Start Date</label> <input type="date"
+														class="form-control form-control-rounded" onchange="showSaleReportList();" id="fromDate" name="fromDate">
+												</div>
+												
+												<div class="col-md-2">
+													<label>Select End Date</label> <input type="date"
+														class="form-control form-control-rounded" onchange="showSaleReportList();" id="toDate" name="toDate">
+												</div>
+													
+												</div>
+<!-- 											<div id="search_section" class="col-md-12 m-b-15 row"> -->
+<!-- 												<div class="col-md-3"> -->
+<!-- 													<label>Select Period</label> <select -->
+<!-- 														class="form-control form-control-rounded" -->
+<!-- 														id="selectPeriod"> -->
+<!-- 														<option>Select Period</option> -->
+<!-- 														<option value="Daily">Daily</option> -->
+<!-- 														<option value="Weekly">Weekly</option> -->
+<!-- 														<option value="Monthly">Monthly</option> -->
+
+
+<!-- 													</select> -->
+<!-- 												</div> -->
+
+<!-- 												<div class="col-md-3"> -->
+<!-- 													<label>Select from Date</label> <input type="date" -->
+<!-- 														class="form-control form-control-rounded" id="fromDate"> -->
+<!-- 												</div> -->
+<!-- 												<div class="col-md-3"> -->
+<!-- 													<label>Select To Date</label> <input type="date" -->
+<!-- 														class="form-control form-control-rounded" id="toDate"> -->
+<!-- 												</div> -->
+
+
+<!-- 											</div> -->
+											<div class="col-md-12 table-responsive">
+
+												<table class=" table table-striped dt-responsive nowrap"
+													id="datatable-buttons"
+													style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+													<thead>
+														<tr>
+
+															<th>Sr.No.</th>
+															<th>Order Code</th>
+															<th>Order Date</th>
+															<th>Product Name</th>
+															<th>Quantity</th>
+															<th>Order Status</th>
+															<th>Total Amount</th>
+
+														</tr>
+													</thead>
+													<tbody id="showData">
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="admin/common/layout :: admin-footer-link"></div>
+	<script type="text/javascript">
+    $('document').ready(function() {
+
+    	
+    	
+    	
+      showSaleReportList();
+    });
+    
+    $("#search_section")
+	.on(
+			'change',
+			'#fromDate',
+			function() {
+				var startDate = $('#fromDate').val();
+				$('#toDate').attr("min",startDate);
+				
+				
+			});
+	
+
+	 
+    function getCurrentDate()
+    {
+
+    	var now = new Date();
+
+    	var day = ("0" + now.getDate()).slice(-2);
+    	var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+    	var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+    	
+    	$("#fromDate").val(today);
+    	$("#toDate").val(today);
+    	
+    }
+
+    function showSaleReportList() {
+        $('#datatable-buttons').DataTable().destroy();
+        
+        var orderStatus = $("#orderStatus").val();
+       
+        
+       
+       var startDate=$("#fromDate").val();
+       var endDate=$("#toDate").val();
+     
+      
+        
+        $.ajax({
+
+            type: "ajax",
+            dataType: 'json',
+            url: "/fetch-book-product-wise-sale-report-by-date",
+            method: 'GET',
+            async: false,
+            data:{orderStatus:orderStatus,startDate:startDate,endDate:endDate},
+            dataType: 'json',
+            success: function(data) {
+            	var arr = ["Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
+                var html = '';
+                var i;
+                for (i = 0; i < data.length; i++) {
+                	var date = new Date(data[i].orderDate);
+					var from_dd = date.getDate();
+					var from_mm = date.getMonth();
+					var from_yyyy = date.getFullYear();
+					var from = from_yyyy + '-' + from_mm + '-'
+							+ from_dd;
+					var from_hours = date.getHours() > 12 ? date
+							.getHours() - 12 : date.getHours();
+					var from_am_pm = date.getHours() >= 12 ? "PM"
+							: "AM";
+					hours = from_hours < 10 ? "0" + from_hours
+							: from_hours;
+					var from_minutes = date.getMinutes() < 10 ? "0"
+							+ date.getMinutes() : date.getMinutes();
+					var from_seconds = date.getSeconds() < 10 ? "0"
+							+ date.getSeconds() : date.getSeconds();
+							date = from_dd + '-' + arr[from_mm] + '-'
+							+ from_yyyy 
+
+                    html += ' <tr>' +
+                  '<td>' + (i+1) + '</td>' +
+                  '<td>'+'<a class="text-success" href="/admin/manage-main-order-detail/' + data[i].orderId + '">' +'<strong>' + data[i].orderCode + '</strong>'+'</a>'+'</td>' +   
+                         '<td>' + date + '</td>' +
+                        '<td>' + data[i].productName + '</td>' +
+                        '<td>' + data[i].quantity + '</td>' +
+                        '<td>' + data[i].orderStatus + '</td>' +
+                        '<td>' + data[i].totalAmount + '</td>' +
+                        
+
+
+                        ' </tr>';
+
+                }
+                $('#showData').html(html);
+
+                $('#datatable-buttons').DataTable({
+                    destroy: true,
+                    lengthChange: false,
+                   
+                    "iDisplayLength": 100,
+                    buttons: ['copy', 'excel', 'colvis']
+                }).buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+            },
+            error: function() {
+                alert('could not get data from database 1');
+            }
+        });
+    }
+    
+    
+    
+    function showDateSaleReportList(startDate,endDate) {
+        $('#datatable-buttons').DataTable().destroy();
+        
+        var orderStatus = $("#orderStatus").val();
+       
+      
+        
+        var vendorId = $("#selectVendor").val();
+     
+        
+        $.ajax({
+
+            type: "ajax",
+            dataType: 'json',
+            url: "/fetch-book-product-wise-sale-report-by-date",
+            method: 'GET',
+            async: false,
+            data:{orderStatus:orderStatus,startDate:startDate,endDate:endDate},
+            dataType: 'json',
+            success: function(data) {
+            	var arr = ["Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
+                var html = '';
+                var i;
+                for (i = 0; i < data.length; i++) {
+                	var date = new Date(data[i].orderDate);
+					var from_dd = date.getDate();
+					var from_mm = date.getMonth();
+					var from_yyyy = date.getFullYear();
+					var from = from_yyyy + '-' + from_mm + '-'
+							+ from_dd;
+					var from_hours = date.getHours() > 12 ? date
+							.getHours() - 12 : date.getHours();
+					var from_am_pm = date.getHours() >= 12 ? "PM"
+							: "AM";
+					hours = from_hours < 10 ? "0" + from_hours
+							: from_hours;
+					var from_minutes = date.getMinutes() < 10 ? "0"
+							+ date.getMinutes() : date.getMinutes();
+					var from_seconds = date.getSeconds() < 10 ? "0"
+							+ date.getSeconds() : date.getSeconds();
+							date = from_dd + '-' + arr[from_mm] + '-'
+							+ from_yyyy 
+
+                    html += ' <tr>' +
+                  '<td>' + (i+1) + '</td>' +
+                         '<td>' + date + '</td>' +
+                         '<td>'+'<a class="text-success" href="/admin/manage-main-order-detail/' + data[i].orderId+ '">' +'<strong>' + data[i].orderCode + '</strong>'+'</a>'+'</td>' +   
+                        '<td>' + data[i].productName + '</td>' +
+                        '<td>' + data[i].quantity + '</td>' +
+                        '<td>' + data[i].orderStatus + '</td>' +
+                        '<td>' + data[i].totalAmount + '</td>' +
+                        
+
+
+                        ' </tr>';
+
+                }
+                $('#showData').html(html);
+
+                $('#datatable-buttons').DataTable({
+                    destroy: true,
+                    lengthChange: false,
+                   
+                    "iDisplayLength": 100,
+                    buttons: ['copy', 'excel', 'colvis']
+                }).buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+            },
+            error: function() {
+                alert('could not get data from database 2');
+            }
+        });
+    }
+    
+   
+   
+    </script>
+</body>
+
+</html>

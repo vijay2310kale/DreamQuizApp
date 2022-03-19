@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head th:replace="admin/common/layout :: admin-header-link"></head>
+<head>
+<style type="text/css">
+</style>
+</head>
+<body>
+	<!-- Begin page -->
+	<div id="wrapper">
+		<!-- Top Bar Start -->
+		<div class="topbar" th:replace="admin/common/layout :: admin-navbar"></div>
+		<!-- Top Bar End -->
+		<!-- ========== Left Sidebar Start ========== -->
+		<div class="left side-menu"
+			th:replace="admin/common/layout :: admin-sidebar"></div>
+		<!-- Left Sidebar End -->
+		<!-- ============================================================== -->
+		<!-- Start right Content here -->
+		<!-- ============================================================== -->
+		<div class="content-page">
+			<!-- Start content -->
+			<div class="content">
+				<!-- test -->
+				<div class="container-fluid">
+					<div class="row">
+
+						<div class="col-sm-12">
+							<div class="page-title-box">
+								<div class="card m-b-20">
+									<div class="card-body">
+										<div class="row ">
+											<div class="col-md-12 m-b-15">
+												<h4 class="mt-0 header-title">
+													Order Details
+													<!-- <button class="btn btn-primary btn-md m-1" type="button"
+														data-toggle="modal" data-target="#addModal"
+														style="float: right;">Add Product</button> -->
+												</h4>
+<!-- 												<div id="search_section" class="col-md-12 m-b-15 row"> -->
+
+
+
+<!-- 													<div class="col-md-3"> -->
+<!-- 														<label>Order Status</label> <select -->
+<!-- 															class="form-control form-control-rounded" -->
+<!-- 															name="orderStatus" id="orderStatus" -->
+<!-- 															onchange="showOrdertList();"> -->
+<!-- 															<option value="">Order Status</option> -->
+<!-- 															<option value="All">All</option> -->
+<!-- 															<option value="Active">Active</option> -->
+<!-- 															<option value="Complete">Complete</option> -->
+
+															
+<!-- 														</select> -->
+<!-- 													</div> -->
+
+
+<!-- 													<div class="col-md-2">
+<!-- 														<label>State</label> <select -->
+<!-- 															class="form-control form-control-rounded" name="stateId" -->
+<!-- 															id="stateId"> -->
+<!-- 														</select> -->
+<!-- 													</div> -->
+
+<!-- 													<div class="col-md-2"> -->
+<!-- 														<label>City</label> <select -->
+<!-- 															class="form-control form-control-rounded" name="cityId" -->
+<!-- 															id="cityId"> -->
+<!-- 														</select> -->
+<!-- 													</div>--> 
+
+<!-- 													<div class="col-md-3"> -->
+<!-- 														<label>Start Date</label> <input type="date" -->
+<!-- 															class="form-control form-control-rounded" -->
+<!-- 															name="startDate" onchange="showOrdertList();" -->
+<!-- 															id="startDate"> -->
+
+<!-- 													</div> -->
+<!-- 													<div class="col-md-3"> -->
+<!-- 														<label>End Date</label> <input type="date" -->
+<!-- 															class="form-control form-control-rounded" -->
+<!-- 															onchange="showOrdertList();" name="endDate" id="endDate"> -->
+
+<!-- 													</div> -->
+
+
+
+<!-- 												</div> -->
+
+
+											</div>
+
+
+											<div class="col-md-12 table-responsive">
+												<form method="post" id="orderPackForm"
+													th:action="@{/book-order-pack}">
+
+<!-- 													<input style="float: right;" type="submit" -->
+<!-- 														class="btn btn-primary ml-2 submit" value="Order Pack" -->
+<!-- 														id="pack"> -->
+<div class="table-responsive">
+													<table class=" table table-striped  nowrap"
+														id="datatable-buttons" role="grid"
+														style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+														<thead>
+															<tr>
+																<!--  <th>Actions</th> -->
+																
+																<th>Order Code</th>
+																<th>Order Date</th>
+																<th>Payment Method</th>
+
+																<th>First Name</th>
+																<th>Last Name</th>
+
+																<th>Email</th>
+																<th>Phone</th>
+																<th>Order Amount</th>
+																<th>Payment Status</th>
+																<th>Order Status</th>
+																<th>Order Placed</th>
+																<th>Order Confirm</th>
+																<th>Order Cancel</th>
+																<th>Order Packed</th>
+																<th>Order Dispatched</th>
+																<th>Order Delivered</th>
+																<th>Action</th>
+															</tr>
+														</thead>
+														<tbody id="showData">
+														</tbody>
+													</table>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="admin/common/layout :: admin-footer-link"></div>
+	<script type="text/javascript">
+		$('document').ready(function() {
+
+			showAllOrderList();
+			showAllStateList();
+
+		});
+		$(document).on('submit', '#orderPackForm', function(e) {
+			checked = $("input[type=checkbox]:checked").length;
+
+			if (!checked) {
+				alert("You must Select at least one Order To Pack");
+				return false;
+			}
+
+		});
+
+		$("#search_section").on('change', '#startDate', function() {
+			var startDate = $('#startDate').val();
+			$('#endDate').attr("min", startDate);
+
+		});
+
+		$("#stateId").change(
+				function() {
+
+					var stateId = $('#stateId').val();
+					$.ajax({
+						type : 'ajax',
+						method : 'GET',
+						url : "/city-by-state",
+						data : {
+							stateId : stateId
+						},
+						async : false,
+						dataType : 'json',
+						success : function(data) {
+							var html = '<option value="">Select City</option>';
+							var len = data.length;
+
+							for (var i = 0; i < len; i++) {
+								html += '<option value="' + data[i].id + '">'
+										+ data[i].cityName + '</option>';
+
+							}
+							$('#cityId').html(html);
+						}
+					});
+				});
+
+		/* function showAllStateList() {
+			$.ajax({
+				type : "ajax",
+				dataType : 'json',
+				url : "/fetch-all-book-states",
+				method : 'GET',
+				async : false,
+				dataType : 'json',
+				success : function(data) {
+					// 
+					var html = '<option value="">Select State</option>';
+					var len = data.length;
+					for (var i = 0; i < len; i++) {
+						html += '<option value="' + data[i].id + '">'
+								+ data[i].stateName + '</option>';
+					}
+					$('#stateId').html(html);
+				},
+				error : function() {
+					alert('could not get data from database 1');
+				}
+			});
+		} */
+
+				function showOrdertList() {
+					var orderStatus=$("#orderStatus").val();
+					var startDate=$("#startDate").val();
+					var endDate=$("#endDate").val();
+
+					$('#datatable-buttons').DataTable().destroy();
+					$.ajax({
+
+								type : "ajax",
+								dataType : 'json',
+								url : "/get-book-order-list",
+								method : 'GET',
+								async : false,
+								data:{orderStatus:orderStatus,startDate:startDate,endDate:endDate},
+								dataType : 'json',
+								success : function(data) {
+		                        	var html = '';
+		                        	var arr = ["Jan", "Feb", "Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
+									var i;
+									for (i = 0; i < data.length; i++) {
+										if (data[i].orderPlaced == 'Confirm') {
+											var orderPlaced = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderPlaced + '" data="' + data[i].id + '" name="orderPlaced" disabled style="align-items: center;" checked>&nbsp;'
+										} else {
+											var orderPlaced = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderPlaced + '" data="' + data[i].id + '" name="orderPlaced" style="align-items: center;">&nbsp;'
+
+										}
+										if (data[i].orderConfirm === 'Confirm') {
+
+											var orderConfirm = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderConfirm + '" data="' + data[i].id + '" name="orderConfirm" disabled style="align-items: center;" checked>&nbsp;'
+										} else {
+											var orderConfirm = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderConfirm + '" data="' + data[i].id + '" name="orderConfirm" style="align-items: center;">&nbsp;'
+
+										}
+										if (data[i].orderCancel == 'Cancel') {
+											var orderCancel = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderConfirm + '" data="' + data[i].id + '" name="orderCancel" style="align-items: center;" checked>&nbsp;'
+										} else if (data[i].orderPacked == 'Confirm') {
+											var orderCancel = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderConfirm + '" data="' + data[i].id + '" disabled name="orderCancel" style="align-items: center;">&nbsp;'
+
+										} else {
+											var orderCancel = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderConfirm + '" data="' + data[i].id + '" name="orderCancel" style="align-items: center;">&nbsp;'
+
+										}
+										if (data[i].orderPacked == 'Confirm') {
+											var orderPacked = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderPacked + '" data="' + data[i].id + '" name="orderPacked" disabled style="align-items: center;" checked>&nbsp;'
+										} else {
+											var orderPacked = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderPacked + '" data="' + data[i].id + '" name="orderPacked" style="align-items: center;">&nbsp;'
+
+										}
+										if (data[i].orderDispatched == 'Confirm') {
+											var orderDispatched = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderDispatched + '" data="' + data[i].id + '" name="orderDispatched" disabled style="align-items: center;" checked>&nbsp;'
+										} else {
+											var orderDispatched = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderDispatched + '" data="' + data[i].id + '" name="orderDispatched" style="align-items: center;">&nbsp;'
+
+										}
+										if (data[i].orderDelivered == 'Confirm') {
+											var orderDelivered = '<td>'
+													+ '<input type="checkbox" class="changeStatus" disabled currentStatus="' + data[i].orderDelivered + '" data="' + data[i].id + '" name="orderDelivered" style="align-items: center;" checked>&nbsp;'
+										} else {
+											var orderDelivered = '<td>'
+													+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderDelivered + '" data="' + data[i].id + '" name="orderDelivered" style="align-items: center;">&nbsp;'
+
+										}
+
+										var date = new Date(data[i].orderDate);
+										var from_dd = date.getDate();
+										var from_mm = date.getMonth() + 1;
+										var from_yyyy = date.getFullYear();
+										var orderDate = from_dd + '-' + from_mm + '-'
+												+ from_yyyy;
+
+										html += ' <tr>' 
+												+
+
+												'<td> <a href="/admin/manage-main-order-detail/' + data[i].id + '">'
+												+ data[i].orderCode
+												+ '</a></td>'
+												+ '<td>'
+												+ orderDate
+												+ '</td>'
+												+ '<td>'
+												+ data[i].paymentMethod
+												+ '</td>'
+												+ '<td>'
+												+ data[i].orderFirstName
+												+ '</td>'
+												+ '<td>'
+												+ data[i].orderLastName
+												+ '</td>'
+												+ '<td>'
+												+ data[i].orderEmail
+												+ '</td>'
+												+ '<td>'
+												+ data[i].orderPhone
+												+ '</td>'
+												+ '<td>'
+												+ data[i].totalPriceAfterExcludingCoupanAmount
+												+ '</td>'
+												+ '<td>'
+												+ data[i].paymentStatus
+												+ '</td>'
+												+ '<td>'
+												+ data[i].orderStatus
+												+ '</td>'
+												+ orderPlaced
+												+ orderConfirm
+												+ orderCancel
+												+ orderPacked
+												+ orderDispatched
+												+ orderDelivered
+												+
+												/*  '<td>' + data[i].orderPlaced + '</td>' +  */
+												/*                         '<td>' + data[i].orderConfirm + '</td>' +
+												 *//*  '<td>' + data[i].orderPacked + '</td>' +   
+												 '<td>' + data[i].orderDispatched + '</td>' +   
+												 '<td>' + data[i].orderDelivered + '</td>' +    */
+
+												'<td>'
+												+
+												/*                         '<a class="text-success mr-2 edit" data="' + data[i].id + '" href="javascript:;"><i class="nav-icon i-Pen-2 font-weight-bold"></i></a>' +
+												 */' <a class="text-danger mr-2 delete" data="' + data[i].id + '" href="javascript:;"><i class="dripicons-document-delete"></i></a>'
+												+ '</td>' +
+
+												' </tr>';
+
+									}
+									$('#showData').html(html);
+
+									$('#datatable-buttons')
+											.DataTable({
+												destroy : true,
+												lengthChange : false,
+												sort : [],
+												"ordering":false,
+												 "iDisplayLength": 100,
+												buttons : [ 'copy', 'excel', 'colvis' ]
+											})
+											.buttons()
+											.container()
+											.appendTo(
+													'#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+								},
+								error : function() {
+									alert('could not get data from database 2 ');
+								}
+							});
+				}
+
+		function showAllOrderList() {
+			$('#datatable-buttons').DataTable().destroy();
+			$
+					.ajax({
+
+						type : "ajax",
+						dataType : 'json',
+						url : "/fetch-all-main-order-list",
+						method : 'GET',
+						async : false,
+						dataType : 'json',
+						success : function(data) {
+							/* console.log(data); */
+							var html = '';
+							var i;
+							for (i = 0; i < data.length; i++) {
+
+								if (data[i].orderPlaced == 'Confirm') {
+									var orderPlaced = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderPlaced + '" data="' + data[i].id + '" name="orderPlaced" disabled style="align-items: center;" checked>&nbsp;'
+								} else {
+									var orderPlaced = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderPlaced + '" data="' + data[i].id + '" name="orderPlaced" style="align-items: center;">&nbsp;'
+
+								}
+								if (data[i].orderConfirm === 'Confirm') {
+
+									var orderConfirm = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderConfirm + '" data="' + data[i].id + '" name="orderConfirm" disabled style="align-items: center;" checked>&nbsp;'
+								} else {
+									var orderConfirm = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderConfirm + '" data="' + data[i].id + '" name="orderConfirm" style="align-items: center;">&nbsp;'
+
+								}
+								if (data[i].orderCancel == 'Cancel') {
+									var orderCancel = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderConfirm + '" data="' + data[i].id + '" name="orderCancel" style="align-items: center;" checked>&nbsp;'
+								} else if (data[i].orderPacked == 'Confirm') {
+									var orderCancel = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderConfirm + '" data="' + data[i].id + '" disabled name="orderCancel" style="align-items: center;">&nbsp;'
+
+								} else {
+									var orderCancel = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderConfirm + '" data="' + data[i].id + '" name="orderCancel" style="align-items: center;">&nbsp;'
+
+								}
+								if (data[i].orderPacked == 'Confirm') {
+									var orderPacked = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderPacked + '" data="' + data[i].id + '" name="orderPacked" disabled style="align-items: center;" checked>&nbsp;'
+								} else {
+									var orderPacked = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderPacked + '" data="' + data[i].id + '" name="orderPacked" style="align-items: center;">&nbsp;'
+
+								}
+								if (data[i].orderDispatched == 'Confirm') {
+									var orderDispatched = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderDispatched + '" data="' + data[i].id + '" name="orderDispatched" disabled style="align-items: center;" checked>&nbsp;'
+								} else {
+									var orderDispatched = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderDispatched + '" data="' + data[i].id + '" name="orderDispatched" style="align-items: center;">&nbsp;'
+
+								}
+								if (data[i].orderDelivered == 'Confirm') {
+									var orderDelivered = '<td>'
+											+ '<input type="checkbox" class="changeStatus" disabled currentStatus="' + data[i].orderDelivered + '" data="' + data[i].id + '" name="orderDelivered" style="align-items: center;" checked>&nbsp;'
+								} else {
+									var orderDelivered = '<td>'
+											+ '<input type="checkbox" class="changeStatus" currentStatus="' + data[i].orderDelivered + '" data="' + data[i].id + '" name="orderDelivered" style="align-items: center;">&nbsp;'
+
+								}
+
+								var date = new Date(data[i].orderDate);
+								var from_dd = date.getDate();
+								var from_mm = date.getMonth() + 1;
+								var from_yyyy = date.getFullYear();
+								var orderDate = from_dd + '-' + from_mm + '-'
+										+ from_yyyy;
+
+								html += ' <tr>' 
+										+
+
+										'<td> <a href="/admin/manage-main-order-detail/' + data[i].id + '">'
+										+ data[i].orderCode
+										+ '</a></td>'
+										+ '<td>'
+										+ orderDate
+										+ '</td>'
+										+ '<td>'
+										+ data[i].paymentMethod
+										+ '</td>'
+										+ '<td>'
+										+ data[i].orderFirstName
+										+ '</td>'
+										+ '<td>'
+										+ data[i].orderLastName
+										+ '</td>'
+										+ '<td>'
+										+ data[i].orderEmail
+										+ '</td>'
+										+ '<td>'
+										+ data[i].orderPhone
+										+ '</td>'
+										+ '<td>'
+										+ data[i].totalPriceAfterExcludingCoupanAmount
+										+ '</td>'
+										+ '<td>'
+										+ data[i].paymentStatus
+										+ '</td>'
+										+ '<td>'
+										+ data[i].orderStatus
+										+ '</td>'
+										+ orderPlaced
+										+ orderConfirm
+										+ orderCancel
+										+ orderPacked
+										+ orderDispatched
+										+ orderDelivered
+										+
+										/*  '<td>' + data[i].orderPlaced + '</td>' +  */
+										/*                         '<td>' + data[i].orderConfirm + '</td>' +
+										 *//*  '<td>' + data[i].orderPacked + '</td>' +   
+										 '<td>' + data[i].orderDispatched + '</td>' +   
+										 '<td>' + data[i].orderDelivered + '</td>' +    */
+
+										'<td>'
+										+
+										/*                         '<a class="text-success mr-2 edit" data="' + data[i].id + '" href="javascript:;"><i class="nav-icon i-Pen-2 font-weight-bold"></i></a>' +
+										 */' <a class="text-danger mr-2 delete" data="' + data[i].id + '" href="javascript:;"><i class="dripicons-document-delete"></i></a>'
+										+ '</td>' +
+
+										' </tr>';
+
+							}
+							$('#showData').html(html);
+
+							$('#datatable-buttons')
+							 									.DataTable({
+							 										destroy : true,
+							 										lengthChange : false,
+							 										
+																	 "iDisplayLength": 10,
+// 																	  "scrollY": 200,
+																        "scrollX": true,	
+																	buttons : [ 'copy', 'excel', 'colvis' ]
+																})
+															.buttons()
+															.container()
+															.appendTo(
+																	'#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+													},
+
+							
+						error : function() {
+							alert('could not get data from database 3');
+						}
+					});
+		}
+
+	    $(document).on('click', '.delete', function() {
+	        var Id = $(this).attr('data');
+	        if (confirm('Are you want to delete this?'))
+	            $.ajax({
+	                method: "POST",
+	                url: "/delete-order",
+	                data: { Id: Id },
+	                success: function(data) {
+	                    showAllCityList();
+	                },
+	                error: function() {
+	                    alert('could not delete');
+	                }
+	            });
+	    });
+		 $("#showData").on('click', '.changeStatus', function() {
+		        var orderId = $(this).attr('data');
+		        var currentStatus = $(this).attr('currentStatus');
+		        var currentName = $(this).attr('name');
+		       
+		        if (confirm('Are you sure?'))
+		            $.ajax({
+		                method: "POST",
+		                url: "/change-status-order",
+		                data: { orderId: orderId, currentStatus:currentStatus,currentName:currentName },
+		                success: function(data) {
+		                	/* if(data.status==="True"){
+		                	alert(data.message);} */
+		                    showAllOrderList();
+		                },
+		                error: function() {
+		                    alert('could not delete');
+		                }
+		            });
+		    });
+
+		// 		 $(document).on('submit', '#orderPackForm', function(e) {
+		// 		        e.preventDefault();
+		// 		      var orderPacked=$(".orderPacked").val();
+
+		// 		     
+		// 		     if($(".orderPacked").is(":checked"))
+		// 		    	 {
+	</script>
+</body>
+
+</html>

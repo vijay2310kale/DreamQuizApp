@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="en">
+<head th:replace="admin/common/layout :: admin-header-link">
+
+
+</head>
+<body class="text-left">
+<!-- 	<div th:replace="admin/common/layout :: loader"></div> -->
+	<div class="">
+
+		<!-- =============== Left side End ================-->
+		<div class="main-content-wrap d-flex flex-column">
+
+			<div class="main-content container">
+				<div class="col-md-12 mb-4">
+					<div class="card text-left">
+						<div class="card-body">
+							<h5 class="mb-5">
+
+								<button class="btn btn-success btn-sm m-1" id="btn1"
+									onclick="goBack()">Back</button>
+
+								<button class="btn btn-success btn-sm m-1"
+									th:data="${order.orderCode}" id="btn" style="float: right;">Print</button>
+
+
+							</h5>
+
+							<div id="printarea">
+
+								<div class="row" style="border-bottom: 1px solid; margin-bottom:25px; padding:10px;">
+									<div class="col-md-4">
+<!-- 										<img src="/images/final-logo.png" style="width: 100%;"> -->
+									</div>
+									<div class="col-md-6" style="border-left: 1px solid; text-align: justify;t">
+										<h4 style="color: #0eb9cb;"><strong >NM Pro Creation</strong></h4>
+										<!-- <p>NM Pro Creation (Proraiba LLP) Office No 306, Sanskruti Arcade, Kaspate Wasti,
+  Wakad,Pune, Maharashtra 411057.</p> <span> Email: support@choicebazzar.com </span>  <p> Customer Care: (+91)9637642788</p> -->
+										
+									
+										
+									</div>
+									<div class="col-md-4">
+									</div>
+								</div>
+
+
+								<h5 class="card-title mb-2">Order Detail</h5>
+
+
+								<div class="table-responsive">
+
+
+									<table class="table table-sm display" id="table1"
+										style="width: 100%">
+										<tbody>
+
+											<tr>
+												<td><b>Order Id</b></td>
+												<td id="orderCode" th:text="${order.orderCode}"></td>
+												<td><b>Order Date</b></td>
+												<td
+													th:text="${#dates.format(order.orderDate, 'dd MMM yyyy')}"></td>
+											</tr>
+											<tr>
+												<td><b>Order Status</b></td>
+												<td th:text="${order.orderStatus}"></td>
+												<td><b>Payment Method</b></td>
+												<td th:text="${order.paymentMethod}"></td>
+											</tr>
+
+										</tbody>
+
+
+									</table>
+								</div>
+
+								<h5 class="card-title mb-2">Billing Details</h5>
+
+
+								<div class="table-responsive">
+
+
+									<table class="table table-sm display" id="table1"
+										style="width: 100%">
+										<tbody>
+											<tr>
+												<td><b>Name</b></td>
+												<td
+													th:text="${order.billingFirstName} +' '+ ${order.billingLastName}"></td>
+												<td><b>Address</b></td>
+												<td
+													th:text="${order.billingAddressLine1} +', '+ ${order.billingAddressLine2}+', '+ ${order.billingArea}+', '+ ${order.billingCity}+', '+ ${order.billingState}+', '+ ${order.billingCountry}+' - '+ ${order.billingPincode}"></td>
+
+											</tr>
+											<tr>
+												<td><b>Email</b></td>
+												<td th:text="${order.billingEmail}"></td>
+												<td><b>Contact</b></td>
+												<td th:text="${order.billingPhone}"></td>
+											</tr>
+										</tbody>
+
+
+									</table>
+								</div>
+
+
+								<h5 class="card-title mb-2">Shipping Details</h5>
+
+
+								<div class="table-responsive">
+
+
+									<table class="table table-sm display" id="table1"
+										style="width: 100%">
+										<tbody>
+
+											<tr>
+												<td><b>Name</b></td>
+												<td
+													th:text="${order.orderFirstName} +' '+ ${order.orderLastName}"></td>
+												<td><b>Address</b></td>
+												<td
+													th:text="${order.orderAddressLine1} +', '+ ${order.orderAddressLine2}+', '+ ${order.orderArea}+', '+ ${order.orderCity}+', '+ ${order.orderState}+', '+ ${order.orderCountry}+' - '+ ${order.orderPincode}"></td>
+											</tr>
+											<tr>
+												<td><b>Email</b></td>
+												<td th:text="${order.orderEmail}"></td>
+												<td><b>Contact</b></td>
+												<td th:text="${order.orderPhone}"></td>
+											</tr>
+
+										</tbody>
+
+
+									</table>
+								</div>
+
+
+								<h5 class="card-title mb-2">Order Items</h5>
+								<div class="table-responsive">
+
+
+									<table class="table table-sm display" id="table"
+										style="width: 100%">
+										<thead>
+											<tr>
+												<th>No</th>
+												<th>Product Name</th>
+												<th>Product MRP</th>
+												<th>Product Price</th>
+												<th>Quantity</th>
+												<th>SubTotal</th>
+											</tr>
+										</thead>
+
+
+										<tbody id="showData">
+											<tr th:each="cart,iter : ${subOrderList}">
+												<td th:text="${iter.index} + 1"></td>
+												<td th:text="${cart.productName}"></td>
+												<td>Rs.&nbsp;<span th:text="${cart.productPrice}"></span></td>
+												<td>Rs.&nbsp;<span th:text="${cart.productPrice}"></span></td>
+												<td th:text="${cart.quantity}"></td>
+												<td>Rs.&nbsp;<span th:text="${cart.totalPrice}"></span></td>
+											</tr>
+
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>Net Price</td>
+												<td>Rs&nbsp;<span th:text="${order.netPrice}"></span></td>
+
+											</tr>
+											<!-- <tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>Shipping Charges</td>
+												<td>Rs&nbsp;<span
+													th:text="${order.totalDeliveryCharge}"></span></td>
+
+											</tr> -->
+<!-- 											<tr> -->
+<!-- 												<td></td> -->
+<!-- 												<td></td> -->
+<!-- 												<td></td> -->
+<!-- 												<td></td> -->
+<!-- <!-- 												<td>Coupon Total</td> -->
+<!-- <!-- 												<td>Rs&nbsp;<span th:text="${order.totalCoupanAmount}"></span></td> -->
+
+<!-- 											</tr> -->
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td><b>Grand Total</b></td>
+												<td><b>Rs&nbsp;<span
+														th:text="${order.totalPriceAfterExcludingCoupanAmount}"></span></b></td>
+
+											</tr>
+										</tbody>
+
+										
+									</table>
+								</div>
+								
+								<h6>Visit us again!</h6>
+								<h6>NM Pro Creation Team</h6>
+								
+
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div th:replace="admin/common/layout :: admin-footer-link"></div>
+	<script type="text/javascript">
+		function goBack() {
+			window.history.back();
+		}
+
+		$("#btn").click(function() {
+			var filename = $(this).attr('data');
+			$("#btn").hide();
+			$("#btn1").hide();
+			//Hide all other elements other than printarea.
+			$("#printarea").show();
+			document.title = filename;
+			window.print();
+			$("#btn").show();
+			$("#btn1").show();
+		});
+	</script>
+
+</body>
+
+</html>

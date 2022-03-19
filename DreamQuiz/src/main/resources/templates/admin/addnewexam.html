@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" th:lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head th:replace="admin/common/layout :: admin-header-link"></head>
+<body onload="onloadfun();">
+
+ <div id="wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar" th:replace="admin/common/layout :: admin-navbar"></div>
+        <!-- Top Bar End -->
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="left side-menu" th:replace="admin/common/layout :: admin-sidebar"></div>
+        <!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+            <!-- test -->
+                <div class="container-fluid">
+                    <div class="row">
+                    
+                        <div class="col-sm-12">
+                            <div class="page-title-box">
+                                <div class="card m-b-20">
+                                    <div class="card-body">
+                                        <div class="row ">
+                                        <div class="col-md-12 m-b-15">
+												<h4 class="mt-0 header-title">
+												Add New	Exam Details
+												<div class="col-md-4 m-b-15">	  
+													  
+													<!--<button class="btn btn-primary btn-md m-1" type="button"
+														data-toggle="modal" data-target="#addModal"
+														style="float: right;">Subject Table </button>-->
+												</h4>
+												</div>
+<!-- 												
+<!--                                             	</div> -->
+												
+											</div>
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    
+                                     <div class="col-md-3 form-group mb-3"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+Add New	Exam Details
+</button>
+</div> 
+<div class="collapse  col-md-6 form-group mb-6" id="collapseExample">
+   <form id="insert">
+                                        <div class="row">
+                                        
+                                         
+                                              
+                                              
+                                           <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">Exam Name</label>
+                                            <input class="form-control form-control-rounded" name="examname"  type="text"  title="only alphabets and spaces allowed" required />
+                                        </div>
+                                         </div>
+                                         <div class="row">
+                                        
+                                        <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">Exam URL</label>
+                                            <input class="form-control form-control-rounded" name="examurl"  type="text"  title="only alphabets and spaces allowed" required />
+                                        </div>
+                                        
+                                        </div>
+                                         <div class="row">
+                                        <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">Exam Gov.Fee</label>
+                                            
+                                         <input class="form-control form-control-rounded" name="examgovfee"  type="text"  title="only alphabets and spaces allowed" required />
+
+                                       
+                                        </div>
+                                         </div>
+                                         <div class="row">
+                                        <div class="col-md-3 form-group mb-3">
+                                            <label for="subCategory">Exam Form Fee</label>
+                                            <input class="form-control form-control-rounded" name="examformfee"  type="text"  title="only alphabets and spaces allowed" required />
+
+                                        </div>
+                                         </div>
+                                        
+                                       
+                                         <div class="row">
+                                       
+                                        <div class="col-md-6 form-group mb-3">
+                                            <label for="subCategory">lastdate</label>
+                                           <input type="date" class="form-control form-control-rounded"	name="lastdate" >
+                                        </div>
+                                            </div>
+                                             
+                                            
+                                          
+                                       
+                                          <div class="col-md-6 modal-footer mt-3">
+                                               <!-- <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>-->
+                                                <input class="btn btn-primary ml-2 submit" type="submit" value="Save">
+                                            </div>
+                                    </form>
+</div>
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-12 table-responsive">
+                                               
+                                             <table class=" table table-striped dt-responsive nowrap" id="datatable-buttons" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+<!--                                                          <th>Id</th> -->
+                                                        <th>Id</th>
+                                                        
+                                                           <th> Exam Name</th>    
+                                                         <th> Exam URL</th> 
+                                                         <th> Gov.Fee</th> 
+                                                        <th> Form Fee</th>
+                                                         
+                                                         <th> Last Date</th> 
+                                                      
+                                                        
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="showData">
+                                                    
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                        </div>
+                    </div>
+                  
+                   
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+   
+      <div th:replace="admin/common/layout :: admin-footer-link"></div>
+      
+      
+    <script type="text/javascript">
+    
+      $(document).on('submit', '#insert', function(e) {
+        e.preventDefault();
+       
+        $.ajax({
+            type: "ajax",
+            method: "POST",
+            url: "/adminAddNewExamDetails",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            cache: false,
+            beforeSend: function() {
+                 $(".submit").prop('disabled', true); 
+            },
+
+            success: function(data) {
+                $(".submit").prop('disabled', false);
+                $('#insert')[0].reset();
+                $('#addModal').modal('hide');
+               
+               showAllQueationList();
+               location.reload();
+            },
+            error: function() {
+                alert('could not insert');
+            }
+        });
+    });
+    
+    
+    
+    function showAllQueationList() {
+	//alert('just test')
+        $('#datatable-buttons').DataTable().destroy();
+        $.ajax({
+            type: "ajax",
+            dataType: 'json',
+            url: "/findallexamdetails",
+            method: 'GET',
+            async: false,
+            dataType: 'json',
+            success: function(data) {
+           
+                var html = '';
+                var i;
+                for (i = 0; i < data.length; i++) {
+	
+		                  console.log(data);		
+					
+                    html += '<tr>' +'<td>'+data[i].eid+'</td>'+
+                         '<td>' + data[i].examname + '</td>' +
+                          '<td>' + data[i].examurl + '</td>' +
+                           '<td>' + data[i].examgovfee + '</td>' +
+                            '<td>' + data[i].examformfee + '</td>' +
+                             '<td>' + data[i].lastdate + '</td>' +
+                         '</tr>';
+                         
+                       
+                        
+                }
+                $('#showData').html(html);
+                $('#datatable-buttons').DataTable({
+                    destroy: true,
+                    lengthChange: false,
+                    order: [0, "desc"],
+                    "iDisplayLength": 100,
+                    buttons: ['copy', 'excel', 'colvis']
+                }).buttons().container().appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+            },
+            error: function() {
+                alert('could not get data from database');
+            }
+        });
+    }
+    
+   
+     </script>
+     <script>
+     function onloadfun(){
+     showAllQueationList();
+     
+     }</script>
+</body>
+</html>

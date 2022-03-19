@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.CAReponce;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.ExamListResponce;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.LoginResponce;
+import com.DreamQuiz.DreamQuiz.AndroidRespopnce.NewRegiRepo;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.OldPaperResponce;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.RegiResponce;
 import com.DreamQuiz.DreamQuiz.AndroidRespopnce.SubjectListResponce;
@@ -42,6 +43,7 @@ import com.DreamQuiz.DreamQuiz.entity.Applyform;
 import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
 //import com.DreamQuiz.DreamQuiz.entity.Doc;
 import com.DreamQuiz.DreamQuiz.entity.Examdetails;
+import com.DreamQuiz.DreamQuiz.entity.NewRegister;
 import com.DreamQuiz.DreamQuiz.entity.OldPaper;
 import com.DreamQuiz.DreamQuiz.entity.Subject;
 import com.DreamQuiz.DreamQuiz.entity.Topics;
@@ -902,52 +904,103 @@ public class AndroidController {
 
 
 	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	      //sftp://ubuntu@3.7.163.87/home/ubuntu/project/uploads
-	      
-	      
-	      
-	          
-	      
+	 @RequestMapping(value="/api/newregilogin",method = RequestMethod.POST)
+		public NewRegiRepo newregilogin(String loginid,String password,String deviceid)throws Exception{
+		
+		 NewRegiRepo loginresponce =new NewRegiRepo();
+		 NewRegister getallbyloginid=androidService.getallbyloginid(loginid);
+		 
+		 List<String> loginidfromdb=androidService.findloginidfromdb();
+		 
+		 if(getallbyloginid.getDeviceid().equals(deviceid)) {
+			 
+			 
+			 try {	
+				 String passwordfromdb =getallbyloginid.getPassword();
+				 if(getallbyloginid.getPassword().equals(password)) {
+			
+					loginresponce.setMessage("You have login successfully");
+					loginresponce.setStatus("1");
+					
+				}else {
+					loginresponce.setMessage("password not match");
+					loginresponce.setStatus("0");
+				
+				}
+				
+			}
+				catch (Exception e) {
+
+					e.printStackTrace();
+				}
+
+			 
+		 }else {
+			 
+			 try {	
+				 
+				 getallbyloginid.setDeviceid(deviceid);
+				 
+				 androidService.updatedivceid(getallbyloginid);
+				 
+				 String passwordfromdb =getallbyloginid.getPassword();
+				 if(getallbyloginid.getPassword().equals(password)) {
+			
+					loginresponce.setMessage("You have login successfully");
+					loginresponce.setStatus("1");
+					
+				}else {
+					loginresponce.setMessage("password not match");
+					loginresponce.setStatus("0");
+				
+				}
+				
+			}
+				catch (Exception e) {
+
+					e.printStackTrace();
+				}
+
+			 
+		 }
+		
+					return loginresponce;
+		
+		}
+		
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	 
+	 @RequestMapping(value="/api/logoutAPI",method = RequestMethod.POST)
+		public NewRegiRepo logoutAPI(String loginid,String deviceid)throws Exception{
+		
+		 NewRegiRepo loginresponce =new NewRegiRepo();
+		 NewRegister getallbyloginid=androidService.getallbyloginid(loginid);
+		 
+		 List<String> loginidfromdb=androidService.findloginidfromdb();
+		 
+		 try {	
+		 if(getallbyloginid.getDeviceid().equals(deviceid)) {
+			 
+			 loginresponce.setMessage("Stay Login");
+					loginresponce.setStatus("1");
+					loginresponce.setStatus("true");
+					
+					
+				}else {
+					loginresponce.setMessage("Device Id Not Match ");
+					loginresponce.setStatus("0");
+					loginresponce.setStatus("false");
+				
+				}
+				
+			}
+				catch (Exception e) {
+
+					e.printStackTrace();
+				}
+		return loginresponce;
+	 
+		 }
 	
 }
 

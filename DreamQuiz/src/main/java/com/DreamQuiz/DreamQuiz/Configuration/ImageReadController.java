@@ -24,7 +24,7 @@ public class ImageReadController {
 	 * @RequestMapping("/uploads/images/{queationImage}") public String
 	 * geBooktProductImage(@PathVariable("queationImage") String queationImage,
 	 * HttpServletResponse response) { try { byte b[] =
-	 * Files.readAllBytes(Paths.get(uploadProductDirectory + queationImage));
+	 * Files.readAllBytes (Paths.get(uploadProductDirectory + queationImage));
 	 * response.setContentLength(b.length); response.setContentType("image/jpg");
 	 * ServletOutputStream os = response.getOutputStream(); os.write(b); os.flush();
 	 * } catch (IOException e) { e.printStackTrace(); } return null;

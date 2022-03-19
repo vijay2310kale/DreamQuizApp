@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.DreamQuiz.DreamQuiz.Repository.ApplyfprmRepository;
 import com.DreamQuiz.DreamQuiz.Repository.CurrentAfairsRepository;
 import com.DreamQuiz.DreamQuiz.Repository.ExamdetailsRepository;
+import com.DreamQuiz.DreamQuiz.Repository.NewRegiRepository;
 import com.DreamQuiz.DreamQuiz.Repository.OldPaperRepository;
 import com.DreamQuiz.DreamQuiz.Repository.RegistrationRepository;
 import com.DreamQuiz.DreamQuiz.Repository.SubjectRepository;
@@ -18,6 +19,7 @@ import com.DreamQuiz.DreamQuiz.Repository.VideodetalsRepository;
 import com.DreamQuiz.DreamQuiz.entity.Applyform;
 import com.DreamQuiz.DreamQuiz.entity.CurrentAffairs;
 import com.DreamQuiz.DreamQuiz.entity.Examdetails;
+import com.DreamQuiz.DreamQuiz.entity.NewRegister;
 import com.DreamQuiz.DreamQuiz.entity.OldPaper;
 import com.DreamQuiz.DreamQuiz.entity.Subject;
 import com.DreamQuiz.DreamQuiz.entity.Topics;
@@ -54,6 +56,8 @@ public class AndroidService {
      
      @Autowired
  	TopisNotesRepository topisNotesRepository;
+     @Autowired
+	  private NewRegiRepository newRegiRepository;
      
 	public UserRegistration newregisteration(UserRegistration registration) {
 		// TODO Auto-generated method stub
@@ -162,6 +166,28 @@ public class AndroidService {
 		// TODO Auto-generated method stub
 		return topisNotesRepository.topicnotesList(topicid);
 	}
+
+	
+
+	public NewRegister getallbyloginid(String loginid) {
+		return newRegiRepository.getallbyloginid(loginid);
+		 
+	}
+
+	public List<String> findloginidfromdb() {
+		// TODO Auto-generated method stub
+		return newRegiRepository.findloginidfromdb();
+	}
+
+	public NewRegister updatedivceid(NewRegister getallbyloginid) {
+		return newRegiRepository.save(getallbyloginid);
+		
+	}
+
+//	public String getpassbyloginid(String loginid) {
+//		// TODO Auto-generated method stub
+//		return newRegiRepository.getpassbyloginid(loginid);
+//	}
 
 	
 	
