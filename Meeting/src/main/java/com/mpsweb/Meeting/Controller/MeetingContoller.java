@@ -114,8 +114,15 @@ public class MeetingContoller {
 	
 	 
 	 @RequestMapping(value="/api/logoutAPI",method = RequestMethod.POST)
-		public NewRegiRepo logoutAPI(String loginid,String deviceid)throws Exception{
+		public NewRegiRepo logoutAPI(@RequestBody NewRegister newRegister)throws Exception{
 		
+		 
+		 
+		 
+		 String loginid=newRegister.getLoginid();
+		// String password=newRegister.getPassword();
+		 String deviceid=newRegister.getDeviceid();
+		 
 		 NewRegiRepo loginresponce =new NewRegiRepo();
 		 NewRegister getallbyloginid=meetingService.getallbyloginid(loginid);
 		 

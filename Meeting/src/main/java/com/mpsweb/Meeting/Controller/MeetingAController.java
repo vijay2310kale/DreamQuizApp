@@ -11,10 +11,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,8 +48,7 @@ public class MeetingAController {
 	
 	
 	
-	
-	@RequestMapping(value="/dashboard",method= RequestMethod.GET)
+	@RequestMapping(value="/dashborard",method= RequestMethod.GET)
 	public String dashboard() {
 		System.out.println("dashboard");
 
@@ -299,7 +300,20 @@ public class MeetingAController {
 	  		
 		}
 	 
-	 
+	 @RequestMapping(value = "/delete-meeting", method = RequestMethod.POST)
+		@ResponseBody
+		public AppJsopnResponse deleteBanner(Model model, HttpServletRequest request, @RequestParam("mid") Long mid) {
+		 
+		 
+		 System.out.println(" mid for delete meeting "+mid);
+		 adminService.deleteMeeting(mid);
+			AppJsopnResponse resp = new AppJsopnResponse();
+			resp.setMessage("Meeting Deleted Successfully");
+			resp.setStatus("True");
+			resp.setData("");
+			return resp;
+		}
+
 	 
 	 
 	 

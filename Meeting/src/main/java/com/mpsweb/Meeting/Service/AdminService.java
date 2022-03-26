@@ -69,5 +69,9 @@ public class AdminService {
 	public void SaveUserdetails(NewRegister newRegister) {
 		newRegiRepository.save(newRegister);
 	}
+	public void deleteMeeting(Long mid) {
+		meetingDetailsRepository.deleteById(mid);
+		
+	}
 	
 }
